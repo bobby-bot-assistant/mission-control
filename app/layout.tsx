@@ -14,6 +14,7 @@ export default function RootLayout({
 }) {
   const navItems = [
     { href: '/', label: 'Activity', icon: '📊' },
+    { href: '/executive', label: 'Executive', icon: '🎯' },
     { href: '/projects', label: 'Projects', icon: '📁' },
     { href: '/docs', label: 'Documents', icon: '📄' },
     { href: '/people', label: 'People', icon: '👥' },
