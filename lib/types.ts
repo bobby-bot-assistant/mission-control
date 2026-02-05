@@ -117,8 +117,8 @@ export interface Task {
   priority: Priority
   due_date?: string
   completed_date?: string
-  notes?: string
-  subtasks?: Subtask[]
+  notes: string[]
+  subtasks: Subtask[]
   related_project_id?: string
   created_at?: string
   updated_at?: string
@@ -129,7 +129,8 @@ export type TaskStatus =
   | '🎯 Up Next (queued for soon)'
   | '🔄 In Progress (actively working)'
   | '👀 Review / Waiting (blocked or needs input)'
-  | '✅ Done'
+  | '✅ Completed'
+  | '❌ Cancelled'
 
 export interface Subtask {
   id: string
