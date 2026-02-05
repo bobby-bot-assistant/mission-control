@@ -19,11 +19,35 @@ npm install
 # Initialize database (creates data/mission-control.db)
 npm run db:init
 
+# Seed with initial data (optional - adds sample project, memories, task)
+npm run seed
+
 # Start development server on localhost:3001
 npm run dev
 ```
 
 Visit http://localhost:3001
+
+## Available Features (Phase 2)
+
+### Projects Hub
+- Create/Edit/Delete projects with modal forms
+- Filter by status, priority, and search
+- Auto-updates last_active timestamp
+- Tags, codenames, and full CRUD
+
+### Memory Vault
+- Quick capture input (press Enter to save)
+- Full form for detailed entries
+- Timeline/list view with category filters
+- Basic search across titles, content, tags
+- Link to projects (future)
+
+### Activity Feed (Home)
+- Computed from Projects + Memories tables
+- Shows last 20 recent activities
+- Quick stats: active projects, memories this week
+- Updates automatically when you add/edit
 
 ## API Test Commands (Projects CRUD)
 
@@ -54,6 +78,7 @@ curl -X DELETE "http://localhost:3001/api/projects?id=<PROJECT_ID>"
 | `npm run build` | Build for production |
 | `npm run start` | Run production server |
 | `npm run db:init` | Initialize/reinitialize database |
+| `npm run seed` | Seed with initial data |
 | `npm run lint` | Run ESLint |
 
 ## Tech Stack
@@ -73,7 +98,7 @@ Schema: `data/schema.sql`
 ```
 mission-control/
 ├── app/
-│   ├── api/           # API routes
+│   ├── api/           # API routes (projects, memories)
 │   ├── docs/          # Documents screen
 │   ├── memory/        # Memory Vault
 │   ├── people/        # People CRM
@@ -81,21 +106,23 @@ mission-control/
 │   ├── tasks/         # Task Center
 │   └── page.tsx       # Activity Feed (home)
 ├── components/        # React components
+│   └── projects/      # Project-specific components
 ├── data/
 │   ├── mission-control.db  # SQLite database
 │   └── schema.sql     # Database schema
 └── lib/
     ├── db.ts          # Database utilities
-    └── projects.ts    # Project CRUD operations
+    ├── projects.ts    # Project CRUD operations
+    ├── memories.ts    # Memory CRUD operations
+    ├── activity.ts    # Activity feed computation
+    └── types.ts       # TypeScript interfaces
 ```
 
 ## Phase Status
 
 - ✅ Phase 1: Foundation (complete)
-- ⏳ Phase 2: Projects Hub
+- ✅ Phase 2: Projects UI + Memory Vault + Activity Feed (complete)
 - ⏳ Phase 3: Documents Library
 - ⏳ Phase 4: People CRM
-- ⏳ Phase 5: Memory Vault
-- ⏳ Phase 6: Task Center
-- ⏳ Phase 7: Activity Feed
-- ⏳ Phase 8: Polish & Auto-Update
+- ⏳ Phase 5: Task Center (full)
+- ⏳ Phase 6: Polish & Auto-Update
