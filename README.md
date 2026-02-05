@@ -5,6 +5,14 @@ Local-first external memory system for Daisy, built with Next.js 14 and SQLite.
 ## Quick Start
 
 ```bash
+# Install nvm if not already installed
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+# Switch to Node 22 LTS (required for better-sqlite3)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm use 22.22.0
+
 # Install dependencies
 npm install
 
@@ -17,10 +25,31 @@ npm run dev
 
 Visit http://localhost:3001
 
+## API Test Commands (Projects CRUD)
+
+```bash
+# Create a project
+curl -X POST http://localhost:3001/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test Project","vision":"Testing CRUD","status":"💡 Idea / Brainstorming","priority":"🔴 Critical","category":"Business","started":"2026-02-04","last_active":"2026-02-04","tags":["test"]}'
+
+# Read all projects
+curl http://localhost:3001/api/projects
+
+# Update a project
+curl -X PUT http://localhost:3001/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{"id":"<PROJECT_ID>","name":"Updated Name"}'
+
+# Delete a project
+curl -X DELETE "http://localhost:3001/api/projects?id=<PROJECT_ID>"
+```
+
 ## Commands
 
 | Command | Description |
 |---------|-------------|
+| `nvm use 22.22.0` | Switch to required Node version |
 | `npm run dev` | Start dev server on port 3001 |
 | `npm run build` | Build for production |
 | `npm run start` | Run production server |
@@ -30,7 +59,7 @@ Visit http://localhost:3001
 ## Tech Stack
 
 - Next.js 14 with App Router
-- SQLite with sql.js (pure JS, no native deps)
+- SQLite with better-sqlite3 (requires Node 22)
 - Tailwind CSS with dark theme (slate/zinc)
 - TypeScript
 
