@@ -19,14 +19,14 @@ export default function ExecutiveHome() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
 
-  // Mock opportunity data (will connect to real API later)
+  // Mock opportunity data (connected to real API in Phase 8)
   const opportunities: Opportunity[] = [
-    { id: '1', name: 'NIH SBIR Phase I', sds: 32.5, deadline: 'Apr 5', amount: '$300K', description: 'Story Hour with Simon', result: 'YES' },
-    { id: '2', name: 'NIMH Digital Mental Health', sds: 27.5, deadline: 'TBD', amount: '$250K', description: 'Innovation NOFO', result: 'YES' },
-    { id: '3', name: 'GrantScout Commercialization', sds: 23.0, deadline: 'Ongoing', amount: 'Rev', description: 'SaaS revenue opportunity', result: 'YES' },
-    { id: '4', name: 'SAMHSA Youth Grants', sds: 22.5, deadline: 'Oct 1', amount: 'TBD', description: 'Youth mental health', result: 'PROBABLY' },
-    { id: '5', name: 'NSF AI for Good', sds: 20.0, deadline: 'Jun 15', amount: '$150K', description: 'AI credibility building', result: 'PROBABLY' },
-    { id: '6', name: 'Blank Foundation $25M', sds: 20.0, deadline: 'Rolling', amount: 'TBD', description: 'Youth mental health initiative', result: 'PROBABLY' },
+    { id: '1', name: 'NIH SBIR Phase I', sds: 32.5, deadline: 'Apr 5', amount: '$300K', description: 'Story Hour with Simon', result: 'YES', projectId: 'proj_story_hour' },
+    { id: '2', name: 'NIMH Digital Mental Health', sds: 27.5, deadline: 'TBD', amount: '$250K', description: 'Innovation NOFO', result: 'YES', projectId: 'proj_story_hour' },
+    { id: '3', name: 'GrantScout Commercialization', sds: 23.0, deadline: 'Ongoing', amount: 'Rev', description: 'SaaS revenue opportunity', result: 'YES', projectId: 'proj_grant_engine' },
+    { id: '4', name: 'SAMHSA Youth Grants', sds: 22.5, deadline: 'Oct 1', amount: 'TBD', description: 'Youth mental health', result: 'PROBABLY', projectId: 'proj_grant_engine' },
+    { id: '5', name: 'NSF AI for Good', sds: 20.0, deadline: 'Jun 15', amount: '$150K', description: 'AI credibility building', result: 'PROBABLY', projectId: 'proj_content_engine' },
+    { id: '6', name: 'Blank Foundation $25M', sds: 20.0, deadline: 'Rolling', amount: 'TBD', description: 'Youth mental health initiative', result: 'PROBABLY', projectId: 'proj_grant_engine' },
   ]
 
   const decisionsNeeded = tasks.filter(t => t.status === '👀 Review / Waiting (blocked or needs input)' && t.priority === '🔴 Critical')
