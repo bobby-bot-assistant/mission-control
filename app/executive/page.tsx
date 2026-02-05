@@ -58,6 +58,17 @@ export default function ExecutiveHome() {
 
   const decisionsNeeded = tasks.filter(t => t.status === '👀 Review / Waiting (blocked or needs input)' && t.priority === '🔴 Critical')
   const recentActivity = [...memories.slice(0, 3), ...tasks.filter(t => t.status === '✅ Completed').slice(0, 2)]
+  
+  // Get upcoming deadlines (next 7 days)
+  const upcomingDeadlines = tasks
+    .filter(t => t.due_date && !t.status?.includes('Completed'))
+    .map(t => ({ ...t, dueDate: new Date(t.due_date) }))
+    .filter(t => {
+      const daysDiff = Math.floor((t.dueDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+      return daysDiff >= 0 && daysDiff <= 7
+    })
+    .sort((a, b) => a.dueDate.getTime() - b.dueDate.getTime())
+    .slice(0, 5)
 
   useEffect(() => {
     async function fetchData() {
@@ -137,6 +148,44 @@ export default function ExecutiveHome() {
           })}
         </div>
       </div>
+
+      {/* UPCOMING DEADLINES */}
+      {upcomingDeadlines.length > 0 && (
+        <div className="mb-8 bg-amber-50 dark:bg-amber-900/10 rounded-lg border border-amber-200 dark:border-amber-800 p-4">
+          <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+            <span>⏰</span> Upcoming Deadlines
+          </h2>
+          <div className="space-y-2">
+            {upcomingDeadlines.map((task) => {
+              const daysUntil = Math.floor((task.dueDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))
+              const isUrgent = daysUntil <= 2
+              
+              return (
+                <button
+                  key={task.id}
+                  onClick={() => router.push(`/tasks?highlight=${task.id}`)}
+                  className="w-full p-3 bg-white dark:bg-zinc-900 rounded border border-amber-200 dark:border-amber-700 text-left hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className={`font-medium ${isUrgent ? 'text-red-700 dark:text-red-400' : ''}`}>
+                        {task.title}
+                      </p>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1">{task.priority}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className={`text-sm font-medium ${isUrgent ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`}>
+                        {daysUntil === 0 ? 'Today' : daysUntil === 1 ? 'Tomorrow' : `${daysUntil} days`}
+                      </p>
+                      <p className="text-xs text-zinc-500">{task.dueDate.toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       {/* TWO COLUMN LAYOUT */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
