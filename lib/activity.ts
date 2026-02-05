@@ -1,6 +1,6 @@
 interface ActivityEntry {
   id: string
-  type: 'project' | 'memory'
+  type: 'project' | 'memory' | 'person' | 'task' | 'document'
   action: 'created' | 'updated' | 'deleted'
   title: string
   timestamp: string
@@ -20,9 +20,33 @@ interface MemoryInput {
   created_at?: string
 }
 
+interface PersonInput {
+  id: string
+  name: string
+  updated_at?: string
+  created_at?: string
+}
+
+interface TaskInput {
+  id: string
+  title: string
+  updated_at?: string
+  created_at?: string
+}
+
+interface DocumentInput {
+  id: string
+  title: string
+  updated_at?: string
+  created_at?: string
+}
+
 export function computeActivityFeed(
   projects: ProjectInput[],
-  memories: MemoryInput[]
+  memories: MemoryInput[],
+  people?: PersonInput[],
+  tasks?: TaskInput[],
+  documents?: DocumentInput[]
 ): ActivityEntry[] {
   const activities: ActivityEntry[] = []
 
@@ -57,6 +81,60 @@ export function computeActivityFeed(
       timestamp: memory.memory_date,
     })
   })
+
+  // Get recent people (last 5 based on updated_at)
+  if (people) {
+    const recentPeople = people
+      .slice()
+      .sort((a, b) => new Date(b.updated_at || '').getTime() - new Date(a.updated_at || '').getTime())
+      .slice(0, 5)
+
+    recentPeople.forEach(person => {
+      activities.push({
+        id: person.id,
+        type: 'person',
+        action: 'updated',
+        title: person.name,
+        timestamp: person.updated_at || person.created_at || new Date().toISOString(),
+      })
+    })
+  }
+
+  // Get recent tasks (last 10 based on updated_at)
+  if (tasks) {
+    const recentTasks = tasks
+      .slice()
+      .sort((a, b) => new Date(b.updated_at || '').getTime() - new Date(a.updated_at || '').getTime())
+      .slice(0, 10)
+
+    recentTasks.forEach(task => {
+      activities.push({
+        id: task.id,
+        type: 'task',
+        action: 'updated',
+        title: task.title,
+        timestamp: task.updated_at || task.created_at || new Date().toISOString(),
+      })
+    })
+  }
+
+  // Get recent documents (last 10 based on updated_at)
+  if (documents) {
+    const recentDocuments = documents
+      .slice()
+      .sort((a, b) => new Date(b.updated_at || '').getTime() - new Date(a.updated_at || '').getTime())
+      .slice(0, 10)
+
+    recentDocuments.forEach(doc => {
+      activities.push({
+        id: doc.id,
+        type: 'document',
+        action: 'updated',
+        title: doc.title,
+        timestamp: doc.updated_at || doc.created_at || new Date().toISOString(),
+      })
+    })
+  }
 
   // Sort all activities by timestamp, most recent first
   return activities
