@@ -112,11 +112,11 @@ export default function ProjectsPage() {
       <div className="mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold mb-2">Projects Hub</h1>
-          <p className="text-zinc-500">{projects.length} project{projects.length !== 1 ? 's' : ''}</p>
+          <p className="text-zinc-600 dark:text-zinc-400">{projects.length} project{projects.length !== 1 ? 's' : ''}</p>
         </div>
         <button
           onClick={openCreateModal}
-          className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200 transition-colors"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
         >
           + New Project
         </button>
@@ -129,13 +129,13 @@ export default function ProjectsPage() {
           placeholder="Search projects..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2 w-64"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 w-64 text-zinc-900 dark:text-zinc-100"
         />
         
         <select
           value={statusFilter}
           onChange={e => setStatusFilter(e.target.value as ProjectStatus | 'All')}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           {STATUS_FILTERS.map(status => (
             <option key={status} value={status}>
@@ -147,7 +147,7 @@ export default function ProjectsPage() {
         <select
           value={priorityFilter}
           onChange={e => setPriorityFilter(e.target.value as Priority | 'All')}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           {PRIORITY_FILTERS.map(priority => (
             <option key={priority} value={priority}>
@@ -171,12 +171,12 @@ export default function ProjectsPage() {
       </div>
 
       {filteredProjects.length === 0 ? (
-        <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-12 text-center">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-12 text-center">
           <p className="text-4xl mb-4">📁</p>
           <p className="text-lg font-medium mb-2">
             {projects.length === 0 ? 'No projects yet' : 'No matching projects'}
           </p>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             {projects.length === 0 
               ? 'Create your first project to get started'
               : 'Try adjusting your filters'}
@@ -187,7 +187,7 @@ export default function ProjectsPage() {
           {filteredProjects.map((project) => (
             <div 
               key={project.id}
-              className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 hover:border-zinc-700 transition-colors group"
+              className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors group"
             >
               <div className="flex justify-between items-start">
                 <div className="flex-1">
@@ -199,13 +199,13 @@ export default function ProjectsPage() {
                       </span>
                     )}
                   </div>
-                  <p className="text-zinc-400 mb-3">{project.vision}</p>
+                  <p className="text-zinc-600 dark:text-zinc-400 mb-3">{project.vision}</p>
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="px-2 py-1 bg-zinc-800 rounded">{project.status}</span>
-                    <span className="px-2 py-1 bg-zinc-800 rounded">{project.priority}</span>
-                    <span className="px-2 py-1 bg-zinc-800 rounded">{project.category}</span>
+                    <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">{project.status}</span>
+                    <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">{project.priority}</span>
+                    <span className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">{project.category}</span>
                     {project.tags.map(tag => (
-                      <span key={tag} className="px-2 py-1 bg-zinc-800 rounded text-zinc-400">
+                      <span key={tag} className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-500 dark:text-zinc-400">
                         #{tag}
                       </span>
                     ))}
@@ -214,13 +214,13 @@ export default function ProjectsPage() {
                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => openEditModal(project)}
-                    className="px-3 py-1 text-sm bg-zinc-800 hover:bg-zinc-700 rounded"
+                    className="px-3 py-1 text-sm bg-zinc-200 dark:bg-zinc-800 hover:bg-zinc-300 dark:hover:bg-zinc-700 rounded text-zinc-800 dark:text-zinc-200"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => setDeleteId(project.id)}
-                    className="px-3 py-1 text-sm bg-red-900/50 hover:bg-red-900 text-red-200 rounded"
+                    className="px-3 py-1 text-sm bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-900 text-red-700 dark:text-red-200 rounded"
                   >
                     Delete
                   </button>
@@ -234,19 +234,19 @@ export default function ProjectsPage() {
       {/* Delete Confirmation Modal */}
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6 max-w-md">
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-6 max-w-md">
             <h3 className="text-lg font-bold mb-2">Delete Project?</h3>
-            <p className="text-zinc-400 mb-4">This action cannot be undone.</p>
+            <p className="text-zinc-600 dark:text-zinc-400 mb-4">This action cannot be undone.</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteId(null)}
-                className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+                className="px-4 py-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(deleteId)}
-                className="px-4 py-2 bg-red-900 text-red-200 rounded hover:bg-red-900/80"
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
               >
                 Delete
               </button>

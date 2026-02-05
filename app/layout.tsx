@@ -20,7 +20,7 @@ export default function RootLayout({
     { href: '/people', label: 'People', icon: '👥' },
     { href: '/memory', label: 'Memory', icon: '🧠' },
     { href: '/tasks', label: 'Tasks', icon: '✅' },
-    { href: '/', label: 'Activity', icon: '📊' },
+    { href: '/activity', label: 'Activity', icon: '📊' },
   ]
 
   return (

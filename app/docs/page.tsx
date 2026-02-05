@@ -145,7 +145,7 @@ export default function DocsPage() {
             <button
               onClick={() => setViewMode('grid')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'grid' ? 'bg-zinc-700 text-white' : 'text-zinc-400'
+                viewMode === 'grid' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
               }`}
             >
               Grid
@@ -153,7 +153,7 @@ export default function DocsPage() {
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'list' ? 'bg-zinc-700 text-white' : 'text-zinc-400'
+                viewMode === 'list' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
               }`}
             >
               List
@@ -161,7 +161,7 @@ export default function DocsPage() {
           </div>
           <button
             onClick={openCreateModal}
-            className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
           >
             + New Document
           </button>
@@ -175,13 +175,13 @@ export default function DocsPage() {
           placeholder="Search documents..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2 w-64"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 w-64 text-zinc-900 dark:text-zinc-100"
         />
         
         <select
           value={typeFilter}
           onChange={e => setTypeFilter(e.target.value as DocumentType | 'All')}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           <option value="All">All Types</option>
           {DOCUMENT_TYPES.map(type => (
@@ -192,7 +192,7 @@ export default function DocsPage() {
         <select
           value={projectFilter}
           onChange={e => setProjectFilter(e.target.value)}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           <option value="All">All Projects</option>
           <option value="">No Project</option>
@@ -218,13 +218,13 @@ export default function DocsPage() {
       {/* Document Viewer Modal */}
       {selectedDoc && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-8">
-          <div className="bg-zinc-900 rounded-lg border border-zinc-800 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="flex justify-between items-start p-6 border-b border-zinc-800">
+          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="flex justify-between items-start p-6 border-b border-zinc-200 dark:border-zinc-800">
               <div>
-                <span className="text-xs px-2 py-1 bg-zinc-800 rounded mr-2">{selectedDoc.type}</span>
+                <span className="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded mr-2">{selectedDoc.type}</span>
                 <h2 className="text-xl font-bold mt-2">{selectedDoc.title}</h2>
                 {getProjectName(selectedDoc.related_project_id) && (
-                  <p className="text-sm text-zinc-400 mt-1">📁 {getProjectName(selectedDoc.related_project_id)}</p>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">📁 {getProjectName(selectedDoc.related_project_id)}</p>
                 )}
               </div>
               <div className="flex items-center gap-2">

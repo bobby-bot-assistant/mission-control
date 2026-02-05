@@ -118,11 +118,11 @@ export default function PeoplePage() {
       <div className="mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold mb-2">People CRM</h1>
-          <p className="text-zinc-500">{people.length} person{people.length !== 1 ? 's' : ''}</p>
+          <p className="text-zinc-600 dark:text-zinc-400">{people.length} person{people.length !== 1 ? 's' : ''}</p>
         </div>
         <button
           onClick={openCreateModal}
-          className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
         >
           + New Person
         </button>
@@ -135,13 +135,13 @@ export default function PeoplePage() {
           placeholder="Search people..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2 w-64"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 w-64 text-zinc-900 dark:text-zinc-100"
         />
         
         <select
           value={relationshipFilter}
           onChange={e => setRelationshipFilter(e.target.value as Relationship | 'All')}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           {RELATIONSHIP_FILTERS.map(rel => (
             <option key={rel} value={rel}>
@@ -153,7 +153,7 @@ export default function PeoplePage() {
         <select
           value={sortBy}
           onChange={e => setSortBy(e.target.value as 'name' | 'lastContact' | 'recent')}
-          className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
         >
           <option value="name">Sort by Name</option>
           <option value="lastContact">Sort by Last Contact</option>
@@ -175,12 +175,12 @@ export default function PeoplePage() {
 
       {/* People Grid */}
       {sortedPeople.length === 0 ? (
-        <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-12 text-center">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-12 text-center">
           <p className="text-4xl mb-4">👥</p>
           <p className="text-lg font-medium mb-2">
             {people.length === 0 ? 'No people yet' : 'No matching people'}
           </p>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             {people.length === 0 
               ? 'Add your first contact to get started'
               : 'Try adjusting your filters'}
@@ -191,7 +191,7 @@ export default function PeoplePage() {
           {sortedPeople.map((person) => (
             <div 
               key={person.id}
-              className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 hover:border-zinc-700 transition-colors group"
+              className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors group"
             >
               <div className="flex justify-between items-start">
                 <div className="flex-1">
