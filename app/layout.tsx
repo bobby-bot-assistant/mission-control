@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import CommandPalette from '@/components/CommandPalette'
 
 export const metadata: Metadata = {
   title: 'Mission Control',
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 min-h-screen flex">
+        <CommandPalette />
         {/* Navigation Sidebar */}
         <nav className="w-64 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col">
           <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">

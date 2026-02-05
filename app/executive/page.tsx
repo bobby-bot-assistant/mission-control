@@ -93,8 +93,16 @@ export default function ExecutiveHome() {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">Executive Home</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">5-second scan of what matters</p>
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold mb-2">Executive Home</h1>
+            <p className="text-zinc-600 dark:text-zinc-400">5-second scan of what matters</p>
+          </div>
+          <div className="text-sm text-zinc-500 dark:text-zinc-400 flex items-center gap-2">
+            <kbd className="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded text-xs">⌘K</kbd>
+            <span>Search anything</span>
+          </div>
+        </div>
       </div>
 
       {/* LEVERAGE OPPORTUNITIES */}
