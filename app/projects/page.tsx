@@ -194,7 +194,7 @@ export default function ProjectsPage() {
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="font-medium text-lg">{project.name}</h3>
                     {project.codename && (
-                      <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded text-zinc-400">
+                      <span className="text-xs px-2 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-400">
                         {project.codename}
                       </span>
                     )}

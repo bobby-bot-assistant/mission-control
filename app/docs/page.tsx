@@ -251,23 +251,23 @@ export default function DocsPage() {
             <div className="flex-1 overflow-y-auto p-6">
               {selectedDoc.content ? (
                 <div 
-                  className="prose prose-invert max-w-none"
+                  className="prose dark:prose-invert max-w-none"
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(selectedDoc.content) }}
                 />
               ) : (
                 <p className="text-zinc-500 italic">No content</p>
               )}
               {selectedDoc.summary && (
-                <div className="mt-6 p-4 bg-zinc-800/50 rounded-lg border border-zinc-700">
-                  <h4 className="text-sm font-medium text-zinc-400 mb-2">Summary</h4>
-                  <p className="text-sm">{selectedDoc.summary}</p>
+                <div className="mt-6 p-4 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg border border-zinc-300 dark:border-zinc-700">
+                  <h4 className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">Summary</h4>
+                  <p className="text-sm text-zinc-700 dark:text-zinc-300">{selectedDoc.summary}</p>
                 </div>
               )}
               <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-500">
                 <span>Created: {new Date(selectedDoc.created_at).toLocaleDateString()}</span>
                 {selectedDoc.word_count && <span>• {selectedDoc.word_count} words</span>}
                 {selectedDoc.tags.map(tag => (
-                  <span key={tag} className="px-2 py-0.5 bg-zinc-800 rounded">#{tag}</span>
+                  <span key={tag} className="px-2 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">#{tag}</span>
                 ))}
               </div>
             </div>
@@ -277,12 +277,12 @@ export default function DocsPage() {
 
       {/* Documents Grid/List */}
       {filteredDocuments.length === 0 ? (
-        <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-12 text-center">
+        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-12 text-center">
           <p className="text-4xl mb-4">📄</p>
           <p className="text-lg font-medium mb-2">
             {documents.length === 0 ? 'No documents yet' : 'No matching documents'}
           </p>
-          <p className="text-sm text-zinc-500">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             {documents.length === 0 
               ? 'Create your first document to get started'
               : 'Try adjusting your filters'}
@@ -293,35 +293,35 @@ export default function DocsPage() {
           {filteredDocuments.map((doc) => (
             <div 
               key={doc.id}
-              className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 hover:border-zinc-700 transition-colors group cursor-pointer"
+              className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors group cursor-pointer"
               onClick={() => setSelectedDoc(doc)}
             >
               <div className="flex items-start justify-between mb-2">
-                <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded">{doc.type}</span>
-                <span className="text-xs text-zinc-500">{doc.word_count} words</span>
+                <span className="text-xs px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">{doc.type}</span>
+                <span className="text-xs text-zinc-600 dark:text-zinc-400">{doc.word_count} words</span>
               </div>
               <h3 className="font-medium mb-2 line-clamp-2">{doc.title}</h3>
               {doc.summary && (
-                <p className="text-sm text-zinc-400 mb-3 line-clamp-2">{doc.summary}</p>
+                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3 line-clamp-2">{doc.summary}</p>
               )}
               <div className="flex flex-wrap gap-1 text-xs">
                 {getProjectName(doc.related_project_id) && (
                   <span className="px-2 py-0.5 bg-blue-900/30 text-blue-300 rounded">📁</span>
                 )}
                 {doc.tags.slice(0, 2).map(tag => (
-                  <span key={tag} className="px-2 py-0.5 bg-zinc-800 rounded text-zinc-400">#{tag}</span>
+                  <span key={tag} className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-600 dark:text-zinc-400">#{tag}</span>
                 ))}
               </div>
               <div className="flex justify-end gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={(e) => { e.stopPropagation(); openEditModal(doc); }}
-                  className="text-xs px-2 py-1 bg-zinc-700 hover:bg-zinc-600 rounded"
+                  className="text-xs px-2 py-1 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 rounded text-zinc-800 dark:text-zinc-200"
                 >
                   Edit
                 </button>
                 <button
                   onClick={(e) => { e.stopPropagation(); setDeleteId(doc.id); }}
-                  className="text-xs px-2 py-1 bg-red-900/50 hover:bg-red-900 text-red-200 rounded"
+                  className="text-xs px-2 py-1 bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-900 text-red-700 dark:text-red-200 rounded"
                 >
                   Del
                 </button>

@@ -124,11 +124,11 @@ export default function MemoryPage() {
             value={quickCapture}
             onChange={e => setQuickCapture(e.target.value)}
             placeholder="Quick capture... (Enter to save, Shift+Enter for new line)"
-            className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3"
+            className="flex-1 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-lg px-4 py-3 text-zinc-900 dark:text-zinc-100"
           />
           <button
             type="submit"
-            className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
           >
             Capture
           </button>
@@ -143,7 +143,7 @@ export default function MemoryPage() {
 
       {/* Full Form */}
       {showFullForm && (
-        <form onSubmit={handleFullSubmit} className="mb-8 bg-zinc-900 rounded-lg border border-zinc-800 p-6">
+        <form onSubmit={handleFullSubmit} className="mb-8 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-6">
           <div className="grid gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Title *</label>
