@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Project, Memory, Person, Task } from '@/lib/types'
+import { Project, Memory, Person, Task, Document } from '@/lib/types'
 import { computeActivityFeed, formatTimestamp } from '@/lib/activity'
 
 interface ActivityItem {
   id: string
-  type: 'project' | 'memory' | 'person' | 'task'
+  type: 'project' | 'memory' | 'person' | 'task' | 'document'
   action: 'created' | 'updated' | 'deleted'
   title: string
   timestamp: string
@@ -17,17 +17,19 @@ export default function Home() {
   const [memories, setMemories] = useState<Memory[]>([])
   const [people, setPeople] = useState<Person[]>([])
   const [tasks, setTasks] = useState<Task[]>([])
+  const [documents, setDocuments] = useState<Document[]>([])
   const [activities, setActivities] = useState<ActivityItem[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [projectsRes, memoriesRes, peopleRes, tasksRes] = await Promise.all([
+        const [projectsRes, memoriesRes, peopleRes, tasksRes, docsRes] = await Promise.all([
           fetch('/api/projects'),
           fetch('/api/memories'),
           fetch('/api/people'),
           fetch('/api/tasks'),
+          fetch('/api/documents'),
         ])
         
         if (projectsRes.ok) {
@@ -46,6 +48,10 @@ export default function Home() {
           const data = await tasksRes.json()
           setTasks(data)
         }
+        if (docsRes.ok) {
+          const data = await docsRes.json()
+          setDocuments(data)
+        }
       } catch (error) {
         console.error('Failed to fetch data:', error)
       } finally {
@@ -56,11 +62,11 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    if (projects.length > 0 || memories.length > 0 || people.length > 0 || tasks.length > 0) {
-      const computed = computeActivityFeed(projects, memories, people, tasks)
+    if (projects.length > 0 || memories.length > 0 || people.length > 0 || tasks.length > 0 || documents.length > 0) {
+      const computed = computeActivityFeed(projects, memories, people, tasks, documents)
       setActivities(computed)
     }
-  }, [projects, memories, people, tasks])
+  }, [projects, memories, people, tasks, documents])
 
   if (loading) {
     return (
@@ -72,9 +78,9 @@ export default function Home() {
   }
 
   const activeProjects = projects.filter(p => !['✅ Completed', '🗄 Archived'].includes(p.status)).length
-  const totalMemories = memories.length
-  const totalPeople = people.length
   const activeTasks = tasks.filter(t => !['✅ Completed', '❌ Cancelled'].includes(t.status)).length
+  const totalPeople = people.length
+  const totalDocuments = documents.length
 
   return (
     <div className="p-8">
@@ -84,7 +90,7 @@ export default function Home() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-5 gap-4 mb-8">
         <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4">
           <p className="text-2xl font-bold">{activeProjects}</p>
           <p className="text-sm text-zinc-500">Active Projects</p>
@@ -98,7 +104,11 @@ export default function Home() {
           <p className="text-sm text-zinc-500">People</p>
         </div>
         <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4">
-          <p className="text-2xl font-bold">{totalMemories}</p>
+          <p className="text-2xl font-bold">{totalDocuments}</p>
+          <p className="text-sm text-zinc-500">Documents</p>
+        </div>
+        <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-4">
+          <p className="text-2xl font-bold">{memories.length}</p>
           <p className="text-sm text-zinc-500">Memories</p>
         </div>
       </div>
@@ -108,7 +118,7 @@ export default function Home() {
         <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
         {activities.length === 0 ? (
           <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-8 text-center">
-            <p className="text-zinc-500">No activity yet. Start creating projects and memories!</p>
+            <p className="text-zinc-500">No activity yet. Start creating projects, memories, people, tasks, or documents!</p>
           </div>
         ) : (
           <div className="space-y-2">
@@ -120,14 +130,16 @@ export default function Home() {
                 <span className="text-xl">
                   {activity.type === 'project' ? '📁' : 
                    activity.type === 'memory' ? '🧠' : 
-                   activity.type === 'person' ? '👤' : '📋'}
+                   activity.type === 'person' ? '👥' : 
+                   activity.type === 'task' ? '📋' : '📄'}
                 </span>
                 <div className="flex-1">
                   <p className="font-medium">{activity.title}</p>
                   <p className="text-sm text-zinc-500">
                     {activity.type === 'project' ? 'Project updated' : 
                      activity.type === 'memory' ? 'Memory captured' : 
-                     activity.type === 'person' ? 'Person updated' : 'Task updated'}
+                     activity.type === 'person' ? 'Person updated' : 
+                     activity.type === 'task' ? 'Task updated' : 'Document updated'}
                   </p>
                 </div>
                 <span className="text-sm text-zinc-500">
@@ -140,7 +152,7 @@ export default function Home() {
       </div>
 
       {/* Quick Links */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <a href="/projects" className="block p-4 bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
           <p className="text-lg font-medium mb-1">📁 Projects Hub</p>
           <p className="text-sm text-zinc-500">Manage your projects</p>
@@ -152,6 +164,10 @@ export default function Home() {
         <a href="/people" className="block p-4 bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
           <p className="text-lg font-medium mb-1">👥 People CRM</p>
           <p className="text-sm text-zinc-500">Manage relationships</p>
+        </a>
+        <a href="/docs" className="block p-4 bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
+          <p className="text-lg font-medium mb-1">📄 Documents Library</p>
+          <p className="text-sm text-zinc-500">Store and search documents</p>
         </a>
         <a href="/memory" className="block p-4 bg-zinc-900 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
           <p className="text-lg font-medium mb-1">🧠 Memory Vault</p>

@@ -1,6 +1,6 @@
 interface ActivityEntry {
   id: string
-  type: 'project' | 'memory' | 'person' | 'task'
+  type: 'project' | 'memory' | 'person' | 'task' | 'document'
   action: 'created' | 'updated' | 'deleted'
   title: string
   timestamp: string
@@ -34,11 +34,19 @@ interface TaskInput {
   created_at?: string
 }
 
+interface DocumentInput {
+  id: string
+  title: string
+  updated_at?: string
+  created_at?: string
+}
+
 export function computeActivityFeed(
   projects: ProjectInput[],
   memories: MemoryInput[],
   people?: PersonInput[],
-  tasks?: TaskInput[]
+  tasks?: TaskInput[],
+  documents?: DocumentInput[]
 ): ActivityEntry[] {
   const activities: ActivityEntry[] = []
 
@@ -106,6 +114,24 @@ export function computeActivityFeed(
         action: 'updated',
         title: task.title,
         timestamp: task.updated_at || task.created_at || new Date().toISOString(),
+      })
+    })
+  }
+
+  // Get recent documents (last 10 based on updated_at)
+  if (documents) {
+    const recentDocuments = documents
+      .slice()
+      .sort((a, b) => new Date(b.updated_at || '').getTime() - new Date(a.updated_at || '').getTime())
+      .slice(0, 10)
+
+    recentDocuments.forEach(doc => {
+      activities.push({
+        id: doc.id,
+        type: 'document',
+        action: 'updated',
+        title: doc.title,
+        timestamp: doc.updated_at || doc.created_at || new Date().toISOString(),
       })
     })
   }
