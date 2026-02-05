@@ -195,7 +195,15 @@ export default function ExecutiveHome() {
 
       {/* QUICK STATS */}
       <div className="bg-zinc-50 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-6">
-        <h2 className="text-lg font-semibold mb-4">🚀 Momentum</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">🚀 Momentum</h2>
+          <button
+            onClick={() => router.push('/timeline')}
+            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            View Timeline →
+          </button>
+        </div>
         <div className="grid grid-cols-3 gap-6 text-center">
           <div>
             <p className="text-2xl font-bold text-green-600 dark:text-green-400">$550K+</p>

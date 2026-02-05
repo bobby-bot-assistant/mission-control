@@ -17,11 +17,12 @@ export default function RootLayout({
 }) {
   const navItems = [
     { href: '/executive', label: 'Executive', icon: '🎯' },
+    { href: '/timeline', label: 'Timeline', icon: '📅' },
     { href: '/projects', label: 'Projects', icon: '📁' },
+    { href: '/tasks', label: 'Tasks', icon: '✅' },
     { href: '/docs', label: 'Documents', icon: '📄' },
     { href: '/people', label: 'People', icon: '👥' },
     { href: '/memory', label: 'Memory', icon: '🧠' },
-    { href: '/tasks', label: 'Tasks', icon: '✅' },
     { href: '/activity', label: 'Activity', icon: '📊' },
   ]
 
