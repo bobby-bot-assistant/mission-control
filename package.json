@@ -3,29 +3,33 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p ${PORT:-3002}",
     "build": "next build",
-    "start": "next start -p 3001",
+    "start": "next start -p ${PORT:-3002}",
     "lint": "next lint",
     "db:init": "node lib/db-init.js",
     "seed": "node lib/seed.js"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "nanoid": "^3.3.6",
     "next": "14.2.35",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "better-sqlite3": "^9.6.0"
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "^7.0.0",
+    "remark-gfm": "^4.0.0",
+    "highlight.js": "^11.11.1"
   },
   "devDependencies": {
     "@types/node": "^20.16.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@types/better-sqlite3": "^7.6.11",
-    "typescript": "^5.6.2",
-    "tailwindcss": "^3.4.13",
-    "postcss": "^8.4.47",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.35"
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.2"
   }
 }
