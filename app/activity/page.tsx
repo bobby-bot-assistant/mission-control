@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { Project, Memory, Person, Task, Document } from '@/lib/types'
 import { computeActivityFeed, formatTimestamp } from '@/lib/activity'
 
@@ -72,7 +73,7 @@ export default function ActivityPage() {
     return (
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-2">Activity Feed</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">Loading...</p>
+        <p className="text-foreground-muted">Loading...</p>
       </div>
     )
   }
@@ -86,30 +87,30 @@ export default function ActivityPage() {
     <div className="p-8">
       <div className="mb-8">
         <h1 className="text-2xl font-bold mb-2">Activity Feed</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">Recent activity across your system</p>
+        <p className="text-foreground-muted">Recent activity across your system</p>
       </div>
 
       {/* Quick Stats */}
       <div className="grid grid-cols-5 gap-4 mb-8">
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <div className="bg-surface rounded-lg border border-border p-4">
           <p className="text-2xl font-bold">{activeProjects}</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Active Projects</p>
+          <p className="text-sm text-foreground-muted">Active Projects</p>
         </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <div className="bg-surface rounded-lg border border-border p-4">
           <p className="text-2xl font-bold">{activeTasks}</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Active Tasks</p>
+          <p className="text-sm text-foreground-muted">Active Tasks</p>
         </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <div className="bg-surface rounded-lg border border-border p-4">
           <p className="text-2xl font-bold">{totalPeople}</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">People</p>
+          <p className="text-sm text-foreground-muted">People</p>
         </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <div className="bg-surface rounded-lg border border-border p-4">
           <p className="text-2xl font-bold">{totalDocuments}</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Documents</p>
+          <p className="text-sm text-foreground-muted">Documents</p>
         </div>
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <div className="bg-surface rounded-lg border border-border p-4">
           <p className="text-2xl font-bold">{memories.length}</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Memories</p>
+          <p className="text-sm text-foreground-muted">Memories</p>
         </div>
       </div>
 
@@ -117,15 +118,15 @@ export default function ActivityPage() {
       <div className="mb-8">
         <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
         {activities.length === 0 ? (
-          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-8 text-center">
-            <p className="text-zinc-600 dark:text-zinc-400">No activity yet. Start creating projects, memories, people, tasks, or documents!</p>
+          <div className="bg-surface rounded-lg border border-border p-8 text-center">
+            <p className="text-foreground-muted">No activity yet. Start creating projects, memories, people, tasks, or documents!</p>
           </div>
         ) : (
           <div className="space-y-2">
             {activities.map((activity) => (
               <div 
                 key={`${activity.type}-${activity.id}`}
-                className="flex items-center gap-4 p-3 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800"
+                className="flex items-center gap-4 p-3 bg-surface rounded-lg border border-border"
               >
                 <span className="text-xl">
                   {activity.type === 'project' ? '📁' : 
@@ -135,14 +136,14 @@ export default function ActivityPage() {
                 </span>
                 <div className="flex-1">
                   <p className="font-medium">{activity.title}</p>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                  <p className="text-sm text-foreground-muted">
                     {activity.type === 'project' ? 'Project updated' : 
                      activity.type === 'memory' ? 'Memory captured' : 
                      activity.type === 'person' ? 'Person updated' : 
                      activity.type === 'task' ? 'Task updated' : 'Document updated'}
                   </p>
                 </div>
-                <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                <span className="text-sm text-foreground-muted">
                   {formatTimestamp(activity.timestamp)}
                 </span>
               </div>
@@ -153,26 +154,26 @@ export default function ActivityPage() {
 
       {/* Quick Links */}
       <div className="grid grid-cols-3 gap-4">
-        <a href="/projects" className="block p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors">
+        <Link href="/projects" className="block p-4 bg-surface rounded-lg border border-border hover:border-foreground-subtle transition-colors">
           <p className="text-lg font-medium mb-1">📁 Projects Hub</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Manage your projects</p>
-        </a>
-        <a href="/tasks" className="block p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors">
+          <p className="text-sm text-foreground-muted">Manage your projects</p>
+        </Link>
+        <Link href="/tasks" className="block p-4 bg-surface rounded-lg border border-border hover:border-foreground-subtle transition-colors">
           <p className="text-lg font-medium mb-1">📋 Tasks Center</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Track and organize tasks</p>
-        </a>
-        <a href="/people" className="block p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors">
+          <p className="text-sm text-foreground-muted">Track and organize tasks</p>
+        </Link>
+        <Link href="/people" className="block p-4 bg-surface rounded-lg border border-border hover:border-foreground-subtle transition-colors">
           <p className="text-lg font-medium mb-1">👥 People CRM</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Manage relationships</p>
-        </a>
-        <a href="/docs" className="block p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors">
+          <p className="text-sm text-foreground-muted">Manage relationships</p>
+        </Link>
+        <Link href="/docs" className="block p-4 bg-surface rounded-lg border border-border hover:border-foreground-subtle transition-colors">
           <p className="text-lg font-medium mb-1">📄 Documents Library</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Store and search documents</p>
-        </a>
-        <a href="/memory" className="block p-4 bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors">
+          <p className="text-sm text-foreground-muted">Store and search documents</p>
+        </Link>
+        <Link href="/memory" className="block p-4 bg-surface rounded-lg border border-border hover:border-foreground-subtle transition-colors">
           <p className="text-lg font-medium mb-1">🧠 Memory Vault</p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">Capture and search memories</p>
-        </a>
+          <p className="text-sm text-foreground-muted">Capture and search memories</p>
+        </Link>
       </div>
     </div>
   )

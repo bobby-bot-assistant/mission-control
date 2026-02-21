@@ -111,15 +111,15 @@ export default function QuickCaptureWidget() {
 
   return (
     <div className={`fixed ${isMinimized ? 'bottom-6 right-6' : 'bottom-6 right-6'} z-50`}>
-      <div className={`bg-white dark:bg-zinc-900 rounded-lg shadow-2xl border border-zinc-200 dark:border-zinc-800 ${
+      <div className={`bg-surface rounded-lg shadow-2xl border border-border ${
         isMinimized ? 'w-64' : 'w-96'
       } transition-all`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="flex items-center justify-between p-4 border-b border-border">
           <div className="flex items-center gap-2">
             <h3 className="font-semibold">Quick Capture</h3>
             {mode && (
-              <span className="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded">
+              <span className="text-xs px-2 py-1 bg-secondary rounded">
                 {mode === 'task' && '✅ Task'}
                 {mode === 'memory' && '🧠 Memory'}
                 {mode === 'note' && '📝 Note'}
@@ -129,7 +129,7 @@ export default function QuickCaptureWidget() {
           <div className="flex items-center gap-1">
             <button
               onClick={() => setIsMinimized(!isMinimized)}
-              className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded"
+              className="p-1 hover:bg-surface-hover rounded"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMinimized ? "M4 8h16M4 16h16" : "M20 12H4"} />
@@ -142,7 +142,7 @@ export default function QuickCaptureWidget() {
                 setContent('')
                 setTitle('')
               }}
-              className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded"
+              className="p-1 hover:bg-surface-hover rounded"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -156,21 +156,21 @@ export default function QuickCaptureWidget() {
           <div className="p-4 grid grid-cols-3 gap-2">
             <button
               onClick={() => setMode('task')}
-              className="p-4 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg text-center transition-colors"
+              className="p-4 bg-background-subtle hover:bg-surface-hover rounded-lg text-center transition-colors"
             >
               <div className="text-2xl mb-1">✅</div>
               <div className="text-sm">Task</div>
             </button>
             <button
               onClick={() => setMode('memory')}
-              className="p-4 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg text-center transition-colors"
+              className="p-4 bg-background-subtle hover:bg-surface-hover rounded-lg text-center transition-colors"
             >
               <div className="text-2xl mb-1">🧠</div>
               <div className="text-sm">Memory</div>
             </button>
             <button
               onClick={() => setMode('note')}
-              className="p-4 bg-zinc-50 dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg text-center transition-colors"
+              className="p-4 bg-background-subtle hover:bg-surface-hover rounded-lg text-center transition-colors"
             >
               <div className="text-2xl mb-1">📝</div>
               <div className="text-sm">Note</div>
@@ -187,7 +187,7 @@ export default function QuickCaptureWidget() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Title (optional)"
-                className="w-full px-3 py-2 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg"
+                className="w-full px-3 py-2 bg-background-subtle border border-border rounded-lg"
                 autoFocus
               />
             )}
@@ -199,19 +199,19 @@ export default function QuickCaptureWidget() {
                 mode === 'memory' ? 'What should I remember?' :
                 'Quick note...'
               }
-              className="w-full px-3 py-2 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg resize-none"
+              className="w-full px-3 py-2 bg-background-subtle border border-border rounded-lg resize-none"
               rows={isMinimized ? 2 : 4}
               autoFocus={mode === 'memory'}
             />
             <div className="flex items-center justify-between">
               <button
                 onClick={() => setMode(null)}
-                className="px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+                className="px-3 py-1 text-sm text-foreground-subtle hover:text-foreground"
               >
                 ← Back
               </button>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-zinc-500">⌘↵ to save</span>
+                <span className="text-xs text-foreground-subtle">⌘↵ to save</span>
                 <button
                   onClick={handleCapture}
                   disabled={!content.trim()}
@@ -231,7 +231,7 @@ export default function QuickCaptureWidget() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Quick capture..."
-              className="w-full px-2 py-1 bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded text-sm resize-none"
+              className="w-full px-2 py-1 bg-background-subtle border border-border rounded text-sm resize-none"
               rows={2}
             />
           </div>

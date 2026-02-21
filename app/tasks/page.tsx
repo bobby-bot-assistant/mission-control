@@ -132,7 +132,7 @@ export default function TasksPage() {
     return (
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-2">Tasks Command Center</h1>
-        <p className="text-zinc-500">Loading tasks...</p>
+        <p className="text-foreground-muted">Loading tasks...</p>
       </div>
     )
   }
@@ -142,14 +142,14 @@ export default function TasksPage() {
       <div className="mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold mb-2">Tasks Command Center</h1>
-          <p className="text-zinc-500">{tasks.length} task{tasks.length !== 1 ? 's' : ''}</p>
+          <p className="text-foreground-muted">{tasks.length} task{tasks.length !== 1 ? 's' : ''}</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex bg-zinc-800 rounded-lg p-1">
+          <div className="flex bg-surface-hover rounded-lg p-1">
             <button
               onClick={() => setViewMode('board')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'board' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
+                viewMode === 'board' ? 'bg-background-subtle text-foreground dark:text-white' : 'text-foreground-muted'
               }`}
             >
               Board
@@ -157,7 +157,7 @@ export default function TasksPage() {
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'list' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
+                viewMode === 'list' ? 'bg-background-subtle text-foreground dark:text-white' : 'text-foreground-muted'
               }`}
             >
               List
@@ -179,13 +179,13 @@ export default function TasksPage() {
           placeholder="Search tasks..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 w-64 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 w-64 text-foreground"
         />
         
         <select
           value={priorityFilter}
           onChange={e => setPriorityFilter(e.target.value as Priority | 'All')}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 text-foreground"
         >
           {PRIORITY_FILTERS.map(priority => (
             <option key={priority} value={priority}>
@@ -197,7 +197,7 @@ export default function TasksPage() {
         <select
           value={projectFilter}
           onChange={e => setProjectFilter(e.target.value)}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 text-foreground"
         >
           <option value="All">All Projects</option>
           <option value="">No Project</option>
@@ -213,7 +213,7 @@ export default function TasksPage() {
               setProjectFilter('All')
               setSearchQuery('')
             }}
-            className="text-zinc-400 hover:text-zinc-200 text-sm"
+            className="text-foreground-subtle hover:text-foreground text-sm"
           >
             Clear filters
           </button>
@@ -226,25 +226,25 @@ export default function TasksPage() {
           {STATUS_COLUMNS.map((status) => {
             const statusTasks = filteredTasks.filter(t => t.status === status)
             return (
-              <div key={status} className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+              <div key={status} className="bg-surface rounded-lg border border-border p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-medium text-sm">{status.split(' ')[0]} {status.split(' ')[1]}</h3>
-                  <span className="bg-zinc-100 dark:bg-zinc-800 text-xs px-2 py-1 rounded">{statusTasks.length}</span>
+                  <span className="bg-secondary text-xs px-2 py-1 rounded">{statusTasks.length}</span>
                 </div>
                 <div className="space-y-3 max-h-[70vh] overflow-y-auto">
                   {statusTasks.map(task => (
                     <div
                       key={task.id}
-                      className="bg-zinc-50 dark:bg-zinc-800 rounded-lg p-3 group hover:bg-zinc-100 dark:hover:bg-zinc-700 transition-colors"
+                      className="bg-background-subtle rounded-lg p-3 group hover:bg-surface-hover transition-colors"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <h4 className="font-medium text-sm leading-tight">{task.title}</h4>
-                        <span className="text-xs px-1.5 py-0.5 bg-zinc-200 dark:bg-zinc-700 rounded shrink-0">
+                        <span className="text-xs px-1.5 py-0.5 bg-background-subtle rounded shrink-0">
                           {task.priority.split(' ')[0]}
                         </span>
                       </div>
                       {task.description && (
-                        <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-2 line-clamp-2">{task.description}</p>
+                        <p className="text-xs text-foreground-muted mb-2 line-clamp-2">{task.description}</p>
                       )}
                       {getProjectName(task.related_project_id) && (
                         <p className="text-xs text-blue-400 mb-2">📁 {getProjectName(task.related_project_id)}</p>
@@ -258,7 +258,7 @@ export default function TasksPage() {
                         <select
                           value={task.status}
                           onChange={(e) => handleStatusChange(task.id, e.target.value as TaskStatus)}
-                          className="text-xs bg-white dark:bg-zinc-600 border border-zinc-300 dark:border-zinc-500 rounded px-2 py-1 text-zinc-900 dark:text-zinc-100"
+                          className="text-xs bg-surface border border-border rounded px-2 py-1 text-foreground"
                         >
                           {STATUS_COLUMNS.map(status => (
                             <option key={status} value={status}>
@@ -269,7 +269,7 @@ export default function TasksPage() {
                         <div className="flex gap-1">
                           <button
                             onClick={() => openEditModal(task)}
-                            className="text-xs px-2 py-1 bg-zinc-600 hover:bg-zinc-500 rounded"
+                            className="text-xs px-2 py-1 bg-surface-hover hover:bg-background-subtle rounded"
                           >
                             Edit
                           </button>
@@ -292,12 +292,12 @@ export default function TasksPage() {
         /* List View */
         <div className="space-y-4">
           {filteredTasks.length === 0 ? (
-            <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-12 text-center">
+            <div className="bg-background-subtle rounded-lg border border-border p-12 text-center">
               <p className="text-4xl mb-4">📋</p>
               <p className="text-lg font-medium mb-2">
                 {tasks.length === 0 ? 'No tasks yet' : 'No matching tasks'}
               </p>
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-foreground-muted">
                 {tasks.length === 0 
                   ? 'Create your first task to get started'
                   : 'Try adjusting your filters'}
@@ -307,18 +307,18 @@ export default function TasksPage() {
             filteredTasks.map((task) => (
               <div 
                 key={task.id}
-                className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 hover:border-zinc-700 transition-colors group"
+                className="bg-background-subtle rounded-lg border border-border p-4 hover:border-border-subtle transition-colors group"
               >
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="font-medium text-lg">{task.title}</h3>
-                      <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded">{task.status}</span>
-                      <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded">{task.priority}</span>
+                      <span className="text-xs px-2 py-0.5 bg-surface-hover rounded">{task.status}</span>
+                      <span className="text-xs px-2 py-0.5 bg-surface-hover rounded">{task.priority}</span>
                     </div>
                     
                     {task.description && (
-                      <p className="text-zinc-400 mb-3">{task.description}</p>
+                      <p className="text-foreground-subtle mb-3">{task.description}</p>
                     )}
                     
                     <div className="flex flex-wrap gap-2 text-xs">
@@ -343,7 +343,7 @@ export default function TasksPage() {
                   <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => openEditModal(task)}
-                      className="px-3 py-1 text-sm bg-zinc-800 hover:bg-zinc-700 rounded"
+                      className="px-3 py-1 text-sm bg-surface-hover hover:bg-surface-hover rounded"
                     >
                       Edit
                     </button>
@@ -364,19 +364,19 @@ export default function TasksPage() {
       {/* Delete Confirmation Modal */}
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6 max-w-md">
-            <h3 className="text-lg font-bold mb-2">Delete Task?</h3>
-            <p className="text-zinc-400 mb-4">This action cannot be undone.</p>
+          <div className="bg-surface rounded-lg border border-border p-6 max-w-md">
+            <h3 className="text-lg font-bold mb-2 text-foreground">Delete Task?</h3>
+            <p className="text-foreground-muted mb-4">This action cannot be undone.</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteId(null)}
-                className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+                className="px-4 py-2 text-foreground-muted hover:text-foreground"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(deleteId)}
-                className="px-4 py-2 bg-red-900 text-red-200 rounded hover:bg-red-900/80"
+                className="px-4 py-2 bg-red-600 dark:bg-red-900 text-white dark:text-red-200 rounded hover:bg-red-700 dark:hover:bg-red-900/80"
               >
                 Delete
               </button>

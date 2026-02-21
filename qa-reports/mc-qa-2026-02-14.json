@@ -1,0 +1,86 @@
+{
+  "timestamp": "2026-02-14T23:39:47.792Z",
+  "baseUrl": "http://localhost:3002",
+  "tests": [
+    {
+      "name": "Command Center loads",
+      "status": "PASS",
+      "duration": 806
+    },
+    {
+      "name": "Pipeline page loads with items",
+      "status": "PASS",
+      "duration": 864
+    },
+    {
+      "name": "Pipeline API returns SDS scores",
+      "status": "PASS",
+      "duration": 519
+    },
+    {
+      "name": "Brief loads: infant-mental-health",
+      "status": "PASS",
+      "duration": 708
+    },
+    {
+      "name": "Brief loads: aap-family-media-score",
+      "status": "PASS",
+      "duration": 680
+    },
+    {
+      "name": "Brief loads: slp-documentation",
+      "status": "PASS",
+      "duration": 691
+    },
+    {
+      "name": "Content Studio loads",
+      "status": "PASS",
+      "duration": 639
+    },
+    {
+      "name": "Organization page loads with agents",
+      "status": "PASS",
+      "duration": 623
+    },
+    {
+      "name": "Operations page loads",
+      "status": "PASS",
+      "duration": 600
+    },
+    {
+      "name": "Insights page loads",
+      "status": "PASS",
+      "duration": 656
+    },
+    {
+      "name": "Strategy page loads",
+      "status": "PASS",
+      "duration": 676
+    },
+    {
+      "name": "Briefings page loads",
+      "status": "PASS",
+      "duration": 629
+    },
+    {
+      "name": "No uncaught JavaScript errors",
+      "passed": true,
+      "error": null,
+      "duration": 0
+    }
+  ],
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://localhost:3002/content"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "url": "http://localhost:3002/operations"
+    }
+  ],
+  "totalPassed": 12,
+  "totalFailed": 0,
+  "totalWarnings": 2,
+  "pageErrors": []
+}

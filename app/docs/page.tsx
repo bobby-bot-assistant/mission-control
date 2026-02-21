@@ -128,7 +128,7 @@ export default function DocsPage() {
     return (
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-2">Documents Library</h1>
-        <p className="text-zinc-500">Loading documents...</p>
+        <p className="text-foreground-muted">Loading documents...</p>
       </div>
     )
   }
@@ -138,14 +138,14 @@ export default function DocsPage() {
       <div className="mb-6 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold mb-2">Documents Library</h1>
-          <p className="text-zinc-500">{documents.length} document{documents.length !== 1 ? 's' : ''}</p>
+          <p className="text-foreground-muted">{documents.length} document{documents.length !== 1 ? 's' : ''}</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex bg-zinc-800 rounded-lg p-1">
+          <div className="flex bg-background-subtle rounded-lg p-1">
             <button
               onClick={() => setViewMode('grid')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'grid' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
+                viewMode === 'grid' ? 'bg-surface text-foreground dark:text-white' : 'text-foreground-muted'
               }`}
             >
               Grid
@@ -153,7 +153,7 @@ export default function DocsPage() {
             <button
               onClick={() => setViewMode('list')}
               className={`px-3 py-1 rounded text-sm ${
-                viewMode === 'list' ? 'bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'
+                viewMode === 'list' ? 'bg-surface text-foreground dark:text-white' : 'text-foreground-muted'
               }`}
             >
               List
@@ -175,13 +175,13 @@ export default function DocsPage() {
           placeholder="Search documents..."
           value={searchQuery}
           onChange={e => setSearchQuery(e.target.value)}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 w-64 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 w-64 text-foreground"
         />
         
         <select
           value={typeFilter}
           onChange={e => setTypeFilter(e.target.value as DocumentType | 'All')}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 text-foreground"
         >
           <option value="All">All Types</option>
           {DOCUMENT_TYPES.map(type => (
@@ -192,7 +192,7 @@ export default function DocsPage() {
         <select
           value={projectFilter}
           onChange={e => setProjectFilter(e.target.value)}
-          className="bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded px-3 py-2 text-zinc-900 dark:text-zinc-100"
+          className="bg-surface border border-border rounded px-3 py-2 text-foreground"
         >
           <option value="All">All Projects</option>
           <option value="">No Project</option>
@@ -208,7 +208,7 @@ export default function DocsPage() {
               setProjectFilter('All')
               setSearchQuery('')
             }}
-            className="text-zinc-400 hover:text-zinc-200 text-sm"
+            className="text-foreground-subtle hover:text-foreground text-sm"
           >
             Clear filters
           </button>
@@ -218,19 +218,19 @@ export default function DocsPage() {
       {/* Document Viewer Modal */}
       {selectedDoc && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-8">
-          <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="flex justify-between items-start p-6 border-b border-zinc-200 dark:border-zinc-800">
+          <div className="bg-surface rounded-lg border border-border w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="flex justify-between items-start p-6 border-b border-border">
               <div>
-                <span className="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded mr-2">{selectedDoc.type}</span>
+                <span className="text-xs px-2 py-1 bg-secondary rounded mr-2">{selectedDoc.type}</span>
                 <h2 className="text-xl font-bold mt-2">{selectedDoc.title}</h2>
                 {getProjectName(selectedDoc.related_project_id) && (
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">📁 {getProjectName(selectedDoc.related_project_id)}</p>
+                  <p className="text-sm text-foreground-muted mt-1">📁 {getProjectName(selectedDoc.related_project_id)}</p>
                 )}
               </div>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => openEditModal(selectedDoc)}
-                  className="px-3 py-1 bg-zinc-800 hover:bg-zinc-700 rounded text-sm"
+                  className="px-3 py-1 bg-surface-hover hover:bg-surface-hover rounded text-sm"
                 >
                   Edit
                 </button>
@@ -242,7 +242,7 @@ export default function DocsPage() {
                 </button>
                 <button
                   onClick={() => setSelectedDoc(null)}
-                  className="text-zinc-500 hover:text-zinc-300 text-xl ml-2"
+                  className="text-foreground-subtle hover:text-foreground-muted text-xl ml-2"
                 >
                   ✕
                 </button>
@@ -255,19 +255,19 @@ export default function DocsPage() {
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(selectedDoc.content) }}
                 />
               ) : (
-                <p className="text-zinc-500 italic">No content</p>
+                <p className="text-foreground-subtle italic">No content</p>
               )}
               {selectedDoc.summary && (
-                <div className="mt-6 p-4 bg-zinc-100 dark:bg-zinc-800/50 rounded-lg border border-zinc-300 dark:border-zinc-700">
-                  <h4 className="text-sm font-medium text-zinc-600 dark:text-zinc-400 mb-2">Summary</h4>
-                  <p className="text-sm text-zinc-700 dark:text-zinc-300">{selectedDoc.summary}</p>
+                <div className="mt-6 p-4 bg-secondary/50 rounded-lg border border-border">
+                  <h4 className="text-sm font-medium text-foreground-muted mb-2">Summary</h4>
+                  <p className="text-sm text-foreground-muted">{selectedDoc.summary}</p>
                 </div>
               )}
-              <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-500">
-                <span>Created: {new Date(selectedDoc.created_at).toLocaleDateString()}</span>
+              <div className="mt-4 flex flex-wrap gap-2 text-xs text-foreground-muted">
+                <span>Created: {selectedDoc.created_at ? new Date(selectedDoc.created_at).toLocaleDateString() : 'Unknown'}</span>
                 {selectedDoc.word_count && <span>• {selectedDoc.word_count} words</span>}
                 {selectedDoc.tags.map(tag => (
-                  <span key={tag} className="px-2 py-0.5 bg-zinc-200 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">#{tag}</span>
+                  <span key={tag} className="px-2 py-0.5 bg-background-subtle rounded text-foreground-muted">#{tag}</span>
                 ))}
               </div>
             </div>
@@ -277,12 +277,12 @@ export default function DocsPage() {
 
       {/* Documents Grid/List */}
       {filteredDocuments.length === 0 ? (
-        <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-12 text-center">
+        <div className="bg-surface rounded-lg border border-border p-12 text-center">
           <p className="text-4xl mb-4">📄</p>
           <p className="text-lg font-medium mb-2">
             {documents.length === 0 ? 'No documents yet' : 'No matching documents'}
           </p>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm text-foreground-muted">
             {documents.length === 0 
               ? 'Create your first document to get started'
               : 'Try adjusting your filters'}
@@ -293,29 +293,29 @@ export default function DocsPage() {
           {filteredDocuments.map((doc) => (
             <div 
               key={doc.id}
-              className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 hover:border-zinc-400 dark:hover:border-zinc-700 transition-colors group cursor-pointer"
+              className="bg-surface rounded-lg border border-border p-4 hover:border-foreground-subtle transition-colors group cursor-pointer"
               onClick={() => setSelectedDoc(doc)}
             >
               <div className="flex items-start justify-between mb-2">
-                <span className="text-xs px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-700 dark:text-zinc-300">{doc.type}</span>
-                <span className="text-xs text-zinc-600 dark:text-zinc-400">{doc.word_count} words</span>
+                <span className="text-xs px-2 py-0.5 bg-secondary rounded text-foreground-muted">{doc.type}</span>
+                <span className="text-xs text-foreground-muted">{doc.word_count} words</span>
               </div>
               <h3 className="font-medium mb-2 line-clamp-2">{doc.title}</h3>
               {doc.summary && (
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3 line-clamp-2">{doc.summary}</p>
+                <p className="text-sm text-foreground-muted mb-3 line-clamp-2">{doc.summary}</p>
               )}
               <div className="flex flex-wrap gap-1 text-xs">
                 {getProjectName(doc.related_project_id) && (
                   <span className="px-2 py-0.5 bg-blue-900/30 text-blue-300 rounded">📁</span>
                 )}
                 {doc.tags.slice(0, 2).map(tag => (
-                  <span key={tag} className="px-2 py-0.5 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-600 dark:text-zinc-400">#{tag}</span>
+                  <span key={tag} className="px-2 py-0.5 bg-secondary rounded text-foreground-muted">#{tag}</span>
                 ))}
               </div>
               <div className="flex justify-end gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={(e) => { e.stopPropagation(); openEditModal(doc); }}
-                  className="text-xs px-2 py-1 bg-zinc-200 dark:bg-zinc-700 hover:bg-zinc-300 dark:hover:bg-zinc-600 rounded text-zinc-800 dark:text-zinc-200"
+                  className="text-xs px-2 py-1 bg-background-subtle hover:bg-surface-hover rounded text-foreground"
                 >
                   Edit
                 </button>
@@ -334,36 +334,36 @@ export default function DocsPage() {
           {filteredDocuments.map((doc) => (
             <div 
               key={doc.id}
-              className="bg-zinc-900 rounded-lg border border-zinc-800 p-4 hover:border-zinc-700 transition-colors group cursor-pointer"
+              className="bg-surface rounded-lg border border-border p-4 hover:border-foreground-subtle transition-colors group cursor-pointer"
               onClick={() => setSelectedDoc(doc)}
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-xs px-2 py-0.5 bg-zinc-800 rounded">{doc.type}</span>
-                    <h3 className="font-medium">{doc.title}</h3>
+                    <span className="text-xs px-2 py-0.5 bg-secondary rounded text-foreground-muted">{doc.type}</span>
+                    <h3 className="font-medium text-foreground">{doc.title}</h3>
                   </div>
                   {doc.summary && (
-                    <p className="text-zinc-400 text-sm mb-2">{doc.summary}</p>
+                    <p className="text-foreground-muted text-sm mb-2">{doc.summary}</p>
                   )}
-                  <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
+                  <div className="flex flex-wrap gap-2 text-xs text-foreground-subtle">
                     {getProjectName(doc.related_project_id) && (
-                      <span className="text-blue-400">📁 {getProjectName(doc.related_project_id)}</span>
+                      <span className="text-blue-600 dark:text-blue-400">📁 {getProjectName(doc.related_project_id)}</span>
                     )}
-                    <span>{new Date(doc.created_at).toLocaleDateString()}</span>
+                    <span>{doc.created_at ? new Date(doc.created_at).toLocaleDateString() : 'Unknown'}</span>
                     <span>{doc.word_count} words</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={(e) => { e.stopPropagation(); openEditModal(doc); }}
-                    className="px-3 py-1 text-sm bg-zinc-800 hover:bg-zinc-700 rounded"
+                    className="px-3 py-1 text-sm bg-background-subtle hover:bg-surface-hover rounded text-foreground"
                   >
                     Edit
                   </button>
                   <button
                     onClick={(e) => { e.stopPropagation(); setDeleteId(doc.id); }}
-                    className="px-3 py-1 text-sm bg-red-900/50 hover:bg-red-900 text-red-200 rounded"
+                    className="px-3 py-1 text-sm bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-900 text-red-700 dark:text-red-200 rounded"
                   >
                     Delete
                   </button>
@@ -377,13 +377,13 @@ export default function DocsPage() {
       {/* Delete Confirmation Modal */}
       {deleteId && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-zinc-900 rounded-lg border border-zinc-800 p-6 max-w-md">
+          <div className="bg-background-subtle rounded-lg border border-border p-6 max-w-md">
             <h3 className="text-lg font-bold mb-2">Delete Document?</h3>
-            <p className="text-zinc-400 mb-4">This action cannot be undone.</p>
+            <p className="text-foreground-subtle mb-4">This action cannot be undone.</p>
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setDeleteId(null)}
-                className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+                className="px-4 py-2 text-foreground-subtle hover:text-foreground"
               >
                 Cancel
               </button>

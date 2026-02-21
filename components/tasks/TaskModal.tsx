@@ -119,14 +119,14 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-zinc-900 rounded-lg border border-zinc-800 w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
+      <div className="bg-surface rounded-lg border border-border w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold">
+          <h2 className="text-xl font-bold text-foreground">
             {editTask ? 'Edit Task' : 'Create New Task'}
           </h2>
           <button
             onClick={onClose}
-            className="text-zinc-500 hover:text-zinc-300"
+            className="text-foreground-subtle hover:text-foreground-muted"
           >
             ✕
           </button>
@@ -135,24 +135,24 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Basic Info */}
           <div>
-            <label className="block text-sm font-medium mb-1">Title *</label>
+            <label className="block text-sm font-medium mb-1 text-foreground-muted">Title *</label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={e => setFormData({ ...formData, title: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               placeholder="Task title"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-medium mb-1 text-foreground-muted">Description</label>
             <textarea
               rows={3}
               value={formData.description}
               onChange={e => setFormData({ ...formData, description: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               placeholder="What needs to be done?"
             />
           </div>
@@ -160,11 +160,11 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
           {/* Status & Priority */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Status</label>
+              <label className="block text-sm font-medium mb-1 text-foreground-muted">Status</label>
               <select
                 value={formData.status}
                 onChange={e => setFormData({ ...formData, status: e.target.value as TaskStatus })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               >
                 {STATUS_OPTIONS.map(status => (
                   <option key={status} value={status}>{status}</option>
@@ -173,11 +173,11 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Priority</label>
+              <label className="block text-sm font-medium mb-1 text-foreground-muted">Priority</label>
               <select
                 value={formData.priority}
                 onChange={e => setFormData({ ...formData, priority: e.target.value as Priority })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               >
                 {PRIORITY_OPTIONS.map(priority => (
                   <option key={priority} value={priority}>{priority}</option>
@@ -189,31 +189,31 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
           {/* Dates & Project */}
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Due Date</label>
+              <label className="block text-sm font-medium mb-1 text-foreground-muted">Due Date</label>
               <input
                 type="date"
                 value={formData.due_date}
                 onChange={e => setFormData({ ...formData, due_date: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Completed Date</label>
+              <label className="block text-sm font-medium mb-1 text-foreground-muted">Completed Date</label>
               <input
                 type="date"
                 value={formData.completed_date}
                 onChange={e => setFormData({ ...formData, completed_date: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-1">Project</label>
+              <label className="block text-sm font-medium mb-1 text-foreground-muted">Project</label>
               <select
                 value={formData.related_project_id}
                 onChange={e => setFormData({ ...formData, related_project_id: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               >
                 <option value="">No Project</option>
                 {projects.map(project => (
@@ -225,45 +225,46 @@ export default function TaskModal({ isOpen, onClose, onSave, editTask, projects 
 
           {/* Subtasks */}
           <div>
-            <label className="block text-sm font-medium mb-1">Subtasks</label>
+            <label className="block text-sm font-medium mb-1 text-foreground-muted">Subtasks</label>
             <textarea
               rows={4}
               value={formData.subtasks}
               onChange={e => setFormData({ ...formData, subtasks: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground font-mono text-sm"
               placeholder="[ ] Uncompleted subtask&#10;[x] Completed subtask&#10;[ ] Another task"
             />
-            <p className="text-xs text-zinc-500 mt-1">
+            <p className="text-xs text-foreground-subtle mt-1">
               Use [ ] for incomplete, [x] for complete
             </p>
           </div>
 
           {/* Notes */}
           <div>
-            <label className="block text-sm font-medium mb-1">Notes</label>
+            <label className="block text-sm font-medium mb-1 text-foreground-muted">Notes</label>
             <textarea
               rows={4}
               value={formData.notes}
               onChange={e => setFormData({ ...formData, notes: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-background-subtle border border-border rounded px-3 py-2 text-foreground"
               placeholder="Additional notes, context, or updates (one per line)"
             />
           </div>
 
+          {/* Actions */}
           <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+              className="px-4 py-2 text-foreground-subtle hover:text-foreground transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200 disabled:opacity-50"
+              className="px-4 py-2 bg-background-subtle text-white rounded-lg hover:bg-surface-hover disabled:opacity-50 transition-colors"
             >
-              {saving ? 'Saving...' : editTask ? 'Save Changes' : 'Create Task'}
+              {saving ? 'Saving...' : (editTask ? 'Save Changes' : 'Create Task')}
             </button>
           </div>
         </form>

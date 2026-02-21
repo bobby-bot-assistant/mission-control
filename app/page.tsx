@@ -13,7 +13,7 @@ export default function HomePage() {
 
   return (
     <div className="p-8 flex items-center justify-center min-h-screen">
-      <p className="text-zinc-500 dark:text-zinc-400">Redirecting to Executive Home...</p>
+      <p className="text-foreground-subtle">Redirecting to Executive Home...</p>
     </div>
   )
 }

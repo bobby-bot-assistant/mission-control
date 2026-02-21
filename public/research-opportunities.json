@@ -1,0 +1,339 @@
+{
+  "created": "2026-02-06",
+  "updated": "2026-02-06",
+  "critical_context": {
+    "sbir_status": "NIH SBIR currently paused due to legislative authority expiring Oct 1, 2025. Expected to be reauthorized Q1-Q2 2026. Applications will likely reopen with April/May deadlines.",
+    "nimh_digital_health": "NIMH actively seeking digital mental health innovations through multiple mechanisms. High priority on pediatric/youth interventions.",
+    "key_priorities": [
+      "Reducing mental health disparities",
+      "Technology-assisted assessment in natural environments",
+      "Just-in-time adaptive interventions",
+      "Service delivery improvements",
+      "Youth/pediatric focus"
+    ]
+  },
+  "nih_sbir_concepts": [
+    {
+      "id": "sbir-01",
+      "title": "AI-Powered Bedtime Companion for Pediatric Mental Health Prevention",
+      "tagline": "Story Hour with Simon - Phase I SBIR",
+      "description": "Develop and validate an AI-powered bedtime intervention system that uses personalized storytelling and parent-child co-regulation to prevent anxiety and sleep disorders in children ages 3-8.",
+      "alignment": {
+        "nimh_priorities": ["Assessment", "Intervention Refinement", "Youth Focus"],
+        "unique_value": "First AI system designed specifically for preventive mental health during critical bedtime transition",
+        "competitive_advantage": "Leverages parent-child dyad instead of isolating child with technology"
+      },
+      "technical_approach": {
+        "phase_1_deliverables": [
+          "AI personalization engine for story adaptation",
+          "Parent handoff system with co-regulation prompts",
+          "Biometric integration for real-time adaptation",
+          "Clinical validation protocol with 30 families"
+        ],
+        "key_innovations": [
+          "Natural language processing for child emotional state detection",
+          "Dynamic story arc adjustment based on arousal levels",
+          "Parent coaching delivered through narrative structure"
+        ]
+      },
+      "commercialization": {
+        "market_size": "$2.3B pediatric sleep aid market",
+        "revenue_model": "B2C subscription ($19.99/mo) + B2B2C health system licensing",
+        "phase_2_path": "1,000 family RCT + Medicaid reimbursement pilot"
+      },
+      "budget": "$450,000",
+      "duration": "24 months",
+      "sds_score": 32.5
+    },
+    {
+      "id": "sbir-02",
+      "title": "Family Crisis Detection & Intervention Platform",
+      "tagline": "Real-time family stress monitoring with just-in-time interventions",
+      "description": "Develop a multi-modal sensing platform that detects family stress patterns through ambient home devices and delivers evidence-based micro-interventions before crisis escalation.",
+      "alignment": {
+        "nimh_priorities": ["Assessment", "Service Interventions", "Disparity Reduction"],
+        "unique_value": "First system to monitor family-level (not individual) mental health dynamics",
+        "competitive_advantage": "Privacy-first design using edge computing, no cloud surveillance"
+      },
+      "technical_approach": {
+        "phase_1_deliverables": [
+          "Multi-modal stress detection algorithm (voice, movement, interaction patterns)",
+          "Family dynamics modeling system",
+          "Intervention library with 50+ evidence-based micro-interventions",
+          "Privacy-preserving edge computing architecture"
+        ],
+        "key_innovations": [
+          "Federated learning for family pattern recognition",
+          "Contextual intervention matching based on family profile",
+          "Progressive intervention escalation framework"
+        ]
+      },
+      "commercialization": {
+        "market_size": "$8.5B family wellness market",
+        "revenue_model": "Hardware device ($299) + subscription service ($9.99/mo)",
+        "phase_2_path": "Integration with child welfare systems for at-risk family support"
+      },
+      "budget": "$450,000",
+      "duration": "24 months",
+      "sds_score": 29.0
+    },
+    {
+      "id": "sbir-03",
+      "title": "Adolescent Digital Phenotyping for Suicide Prevention",
+      "tagline": "Passive sensing + AI for early suicide risk detection in teens",
+      "description": "Create a privacy-preserving digital phenotyping system that uses smartphone passive sensing to detect early warning signs of suicidal ideation in adolescents, with automated clinical alerts.",
+      "alignment": {
+        "nimh_priorities": ["Assessment", "Youth Focus", "Suicide Prevention"],
+        "unique_value": "Only teen-specific suicide prevention system with passive detection",
+        "competitive_advantage": "Co-designed with teens to ensure actual adoption and privacy"
+      },
+      "technical_approach": {
+        "phase_1_deliverables": [
+          "Passive sensing SDK for iOS/Android",
+          "Multimodal risk detection algorithm (85%+ sensitivity)",
+          "Clinical alert system with tiered responses",
+          "Teen privacy dashboard and consent framework"
+        ],
+        "key_innovations": [
+          "Differential privacy for teen data protection",
+          "Explainable AI for clinical trust",
+          "Peer support activation for low-risk alerts"
+        ]
+      },
+      "commercialization": {
+        "market_size": "$1.2B adolescent mental health tech",
+        "revenue_model": "B2B2C through schools/health systems ($5 PMPM)",
+        "phase_2_path": "Integration with 988 crisis hotline + school counseling systems"
+      },
+      "budget": "$450,000",
+      "duration": "24 months",
+      "sds_score": 30.5
+    },
+    {
+      "id": "sbir-04",
+      "title": "Cultural Bridge: Multilingual Family Therapy Assistant",
+      "tagline": "Breaking language barriers in family mental health care",
+      "description": "Develop an AI-powered translation and cultural adaptation system that enables effective family therapy across language and cultural barriers, specifically targeting immigrant and refugee families.",
+      "alignment": {
+        "nimh_priorities": ["Service Delivery", "Disparity Reduction", "Family Focus"],
+        "unique_value": "First mental health tech explicitly designed for immigrant families",
+        "competitive_advantage": "Cultural adaptation beyond translation - understanding family dynamics across cultures"
+      },
+      "technical_approach": {
+        "phase_1_deliverables": [
+          "Real-time therapy translation for 10 languages",
+          "Cultural context engine for therapeutic concepts",
+          "Therapist dashboard with cultural insights",
+          "Family engagement tools in native languages"
+        ],
+        "key_innovations": [
+          "Emotion-preserving translation for therapy context",
+          "Cultural metaphor mapping for therapeutic concepts",
+          "Multi-speaker disambiguation in family sessions"
+        ]
+      },
+      "commercialization": {
+        "market_size": "$600M language services in healthcare",
+        "revenue_model": "SaaS for clinics ($299/mo) + session fees ($25/session)",
+        "phase_2_path": "Medicaid billing codes for culturally adapted therapy"
+      },
+      "budget": "$400,000",
+      "duration": "18 months",
+      "sds_score": 27.5
+    },
+    {
+      "id": "sbir-05",
+      "title": "School-Based Emotional Regulation Ecosystem",
+      "tagline": "Whole-school approach to preventive mental health",
+      "description": "Create a comprehensive digital platform that transforms schools into preventive mental health environments through teacher tools, student apps, and family engagement systems.",
+      "alignment": {
+        "nimh_priorities": ["Service Interventions", "Youth Focus", "Prevention"],
+        "unique_value": "Ecosystem approach vs. point solutions for school mental health",
+        "competitive_advantage": "Integrates with existing school infrastructure and workflows"
+      },
+      "technical_approach": {
+        "phase_1_deliverables": [
+          "Teacher dashboard for classroom emotional climate",
+          "Student self-regulation app with gamification",
+          "Parent engagement portal with home activities",
+          "School-wide data analytics for early intervention"
+        ],
+        "key_innovations": [
+          "Classroom acoustic analysis for stress detection",
+          "Peer support matching algorithm",
+          "Curriculum-integrated mental health moments"
+        ]
+      },
+      "commercialization": {
+        "market_size": "$3.2B school mental health market",
+        "revenue_model": "School district licensing ($10/student/year)",
+        "phase_2_path": "State-level contracts + integration with IEP systems"
+      },
+      "budget": "$450,000",
+      "duration": "24 months",
+      "sds_score": 28.0
+    }
+  ],
+  "nimh_digital_mental_health_concepts": [
+    {
+      "id": "nimh-01",
+      "title": "Therapeutic Entertainment Network for Families",
+      "tagline": "Mindful Media's clinical content delivery platform",
+      "description": "Build a comprehensive platform for delivering clinically-designed entertainment that strengthens family bonds while building emotional resilience, starting with underserved communities.",
+      "mechanism": "R01 or STTR (when reauthorized)",
+      "alignment": {
+        "nimh_priorities": ["Intervention Refinement", "Disparity Reduction", "Service Delivery"],
+        "unique_value": "Entertainment as trojan horse for mental health intervention",
+        "competitive_advantage": "Only platform measuring mental health outcomes from media consumption"
+      },
+      "research_design": {
+        "aims": [
+          "Develop adaptive content recommendation based on family stress levels",
+          "Validate emotional regulation improvements through co-viewing",
+          "Test implementation in community health centers"
+        ],
+        "methods": [
+          "3-arm RCT: Mindful Media vs. standard media vs. no media",
+          "Mixed methods with biomarkers + qualitative family interviews",
+          "Implementation science framework for community deployment"
+        ]
+      },
+      "impact": {
+        "scientific": "First evidence for entertainment-based prevention at scale",
+        "clinical": "New modality for family-based prevention",
+        "commercial": "Creates evidence base for insurance reimbursement"
+      },
+      "budget": "$500,000/year",
+      "duration": "5 years",
+      "sds_score": 31.0
+    },
+    {
+      "id": "nimh-02",
+      "title": "AI Therapist Training Simulator",
+      "tagline": "VR-based training for culturally responsive therapy",
+      "description": "Develop an AI-powered VR training system that helps therapists practice culturally responsive interventions with diverse virtual families, addressing the critical shortage of culturally competent providers.",
+      "mechanism": "R21 Exploratory Grant",
+      "alignment": {
+        "nimh_priorities": ["Service Delivery", "Disparity Reduction", "Provider Training"],
+        "unique_value": "Safe space for therapists to make mistakes and learn",
+        "competitive_advantage": "Infinite scenario generation based on real family dynamics"
+      },
+      "research_design": {
+        "aims": [
+          "Create AI system for generating culturally authentic family scenarios",
+          "Validate training effectiveness through therapist performance metrics",
+          "Assess impact on therapy outcomes with real families"
+        ],
+        "methods": [
+          "Therapist training RCT: AI simulator vs. traditional training",
+          "Pre/post cultural competence assessments",
+          "Patient satisfaction and outcome tracking"
+        ]
+      },
+      "impact": {
+        "scientific": "New paradigm for clinical training evaluation",
+        "clinical": "Addresses therapist shortage in underserved communities",
+        "commercial": "Licensing to therapy training programs nationwide"
+      },
+      "budget": "$275,000/year",
+      "duration": "2 years",
+      "sds_score": 26.5
+    },
+    {
+      "id": "nimh-03",
+      "title": "Community Trauma Response Network",
+      "tagline": "Rapid deployment mental health support for community crises",
+      "description": "Create a digital platform that enables rapid community-based mental health response to collective trauma events (shootings, natural disasters, etc.) through coordinated peer and professional support.",
+      "mechanism": "R34 Clinical Trial Planning Grant",
+      "alignment": {
+        "nimh_priorities": ["Service Interventions", "Assessment", "Crisis Response"],
+        "unique_value": "Community-led vs. top-down crisis response",
+        "competitive_advantage": "Leverages existing social networks for rapid deployment"
+      },
+      "research_design": {
+        "aims": [
+          "Design community activation protocols for crisis response",
+          "Develop matching algorithms for peer support",
+          "Create outcome measurement framework for community interventions"
+        ],
+        "methods": [
+          "Community-based participatory research design",
+          "Simulation exercises with 3 pilot communities",
+          "Mixed methods evaluation of response effectiveness"
+        ]
+      },
+      "impact": {
+        "scientific": "New model for community mental health mobilization",
+        "clinical": "Reduces PTSD through immediate intervention",
+        "policy": "Model for federal crisis response funding"
+      },
+      "budget": "$450,000 total",
+      "duration": "3 years",
+      "sds_score": 25.0
+    },
+    {
+      "id": "nimh-04",
+      "title": "Infant Mental Health Prediction System",
+      "tagline": "AI-powered early detection of developmental concerns",
+      "description": "Develop a home-based monitoring system that uses computer vision and acoustic analysis to detect early signs of autism, anxiety, and attachment disorders in infants, enabling intervention before symptoms fully manifest.",
+      "mechanism": "R01 Research Project Grant",
+      "alignment": {
+        "nimh_priorities": ["Assessment", "Early Intervention", "Technology Innovation"],
+        "unique_value": "Earliest possible mental health intervention - infancy",
+        "competitive_advantage": "Non-invasive, continuous monitoring in natural environment"
+      },
+      "research_design": {
+        "aims": [
+          "Develop infant behavior analysis algorithms",
+          "Validate predictions against clinical assessments at 18-36 months",
+          "Test feasibility of home deployment"
+        ],
+        "methods": [
+          "Longitudinal cohort study with 500 families",
+          "Monthly assessments from birth to 36 months",
+          "Machine learning model development and validation"
+        ]
+      },
+      "impact": {
+        "scientific": "Breakthrough in early detection capabilities",
+        "clinical": "Enables pre-symptomatic intervention",
+        "economic": "Massive cost savings through prevention"
+      },
+      "budget": "$750,000/year",
+      "duration": "5 years",
+      "sds_score": 29.5
+    },
+    {
+      "id": "nimh-05",
+      "title": "Digital Therapeutic Formulary",
+      "tagline": "Evidence-based matching of digital interventions to patient needs",
+      "description": "Create a clinical decision support system that matches patients to appropriate digital mental health interventions based on symptom profiles, cultural factors, and treatment history.",
+      "mechanism": "R21/R33 Phased Innovation Award",
+      "alignment": {
+        "nimh_priorities": ["Service Delivery", "Intervention Refinement", "Personalization"],
+        "unique_value": "Solves the 'app overwhelm' problem in digital mental health",
+        "competitive_advantage": "Independent evaluation of all available digital therapeutics"
+      },
+      "research_design": {
+        "aims": [
+          "R21: Develop matching algorithm and evaluate existing digital therapeutics",
+          "R33: Clinical trial of formulary vs. usual care",
+          "Implementation in 3 health systems"
+        ],
+        "methods": [
+          "Systematic review and meta-analysis of digital interventions",
+          "Algorithm development using collaborative filtering + clinical rules",
+          "Pragmatic trial in real-world clinical settings"
+        ]
+      },
+      "impact": {
+        "scientific": "First comprehensive evaluation framework for digital therapeutics",
+        "clinical": "Improves outcomes through better intervention matching",
+        "policy": "Model for FDA regulation of digital therapeutics"
+      },
+      "budget": "$275,000 (R21) + $500,000/year (R33)",
+      "duration": "2 years (R21) + 3 years (R33)",
+      "sds_score": 24.5
+    }
+  ]
+}

@@ -55,6 +55,8 @@ export type DocumentType =
   | '🎯 Strategy / Plan'
   | '💡 Ideas / Brainstorm'
 
+export type OutreachStatus = '⬜ Not Contacted' | '📧 Emailed' | '💬 Responded' | '📅 Meeting Scheduled' | '✅ Engaged'
+
 export interface Person {
   id: string
   name: string
@@ -66,7 +68,16 @@ export interface Person {
   last_contact?: string
   followup_reminder?: string
   tags: string[]
+  outreach_status?: OutreachStatus
+  cases?: string[]
+  email_draft?: EmailDraft
   created_at?: string
+  updated_at?: string
+}
+
+export interface EmailDraft {
+  subject: string
+  body: string
   updated_at?: string
 }
 
@@ -136,4 +147,18 @@ export interface Subtask {
   id: string
   title: string
   completed: boolean
+}
+
+export interface OutreachDocument {
+  id: string
+  title: string
+  filename: string
+  mime_type: string
+  content?: string
+  file_path?: string
+  category: 'email-template' | 'executive-summary' | 'legal-document' | 'outreach-asset' | 'other'
+  linked_contacts: string[]
+  tags: string[]
+  created_at: string
+  updated_at: string
 }

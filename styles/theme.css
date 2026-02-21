@@ -1,0 +1,74 @@
+/* Theme System - Single Source of Truth for Colors */
+
+:root {
+  /* Backgrounds */
+  --color-background: 251 250 249;        /* zinc-50 */
+  --color-background-subtle: 244 244 245; /* zinc-100 */
+  --color-surface: 255 255 255;           /* white */
+  --color-surface-hover: 250 250 250;     /* zinc-50 */
+  
+  /* Foregrounds */
+  --color-foreground: 24 24 27;           /* zinc-900 */
+  --color-foreground-muted: 63 63 70;     /* zinc-700 (was zinc-600, darker for contrast) */
+  --color-foreground-subtle: 82 82 91;    /* zinc-600 (was zinc-500, darker for contrast) */
+  
+  /* Borders */
+  --color-border: 212 212 216;            /* zinc-300 (was zinc-200, more visible) */
+  --color-border-subtle: 228 228 231;     /* zinc-200 (was zinc-100) */
+  
+  /* Interactive */
+  --color-primary: 24 24 27;              /* zinc-900 */
+  --color-primary-foreground: 255 255 255;
+  --color-secondary: 244 244 245;         /* zinc-100 */
+  --color-secondary-foreground: 24 24 27;
+  
+  /* Semantic */
+  --color-success: 34 197 94;             /* green-600 */
+  --color-warning: 245 158 11;            /* amber-600 */
+  --color-error: 220 38 38;               /* red-600 */
+  --color-info: 37 99 235;                /* blue-600 */
+  
+  /* Note bars / highlighted sections */
+  --color-note-bg: 244 244 245;           /* zinc-100 */
+  --color-note-text: 39 39 42;            /* zinc-800 — high contrast on light bg */
+}
+
+.dark {
+  /* Backgrounds */
+  --color-background: 9 9 11;             /* zinc-950 */
+  --color-background-subtle: 24 24 27;    /* zinc-900 */
+  --color-surface: 24 24 27;              /* zinc-900 */
+  --color-surface-hover: 39 39 42;        /* zinc-800 */
+  
+  /* Foregrounds — bumped brighter for readability */
+  --color-foreground: 250 250 250;        /* near-white */
+  --color-foreground-muted: 212 212 216;  /* zinc-300 (was zinc-400) */
+  --color-foreground-subtle: 161 161 170; /* zinc-400 (was zinc-500) */
+  
+  /* Borders — slightly more visible */
+  --color-border: 52 52 56;              /* zinc-700 (was zinc-800) */
+  --color-border-subtle: 39 39 42;        /* zinc-800 (was zinc-900) */
+  
+  /* Interactive */
+  --color-primary: 244 244 245;           /* zinc-100 */
+  --color-primary-foreground: 24 24 27;
+  --color-secondary: 39 39 42;            /* zinc-800 */
+  --color-secondary-foreground: 251 250 249;
+  
+  /* Semantic */
+  --color-success: 74 222 128;            /* green-400 */
+  --color-warning: 251 191 36;            /* amber-400 */
+  --color-error: 248 113 113;             /* red-400 */
+  --color-info: 96 165 250;               /* blue-400 */
+  
+  /* Note bars / highlighted sections */
+  --color-note-bg: 39 39 42;             /* zinc-800 */
+  --color-note-text: 228 228 231;         /* zinc-200 — high contrast on dark bg */
+}
+
+/* Utility Classes */
+.theme-transition {
+  transition-property: color, background-color, border-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

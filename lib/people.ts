@@ -1,5 +1,5 @@
 import { getDb } from './db'
-import { Person, Relationship } from './types'
+import { Person, Relationship, OutreachStatus } from './types'
 
 export function getAllPeople(): Person[] {
   const db = getDb()
@@ -19,8 +19,8 @@ export function createPerson(person: Omit<Person, 'id' | 'created_at' | 'updated
   const now = new Date().toISOString()
   
   db.prepare(`
-    INSERT INTO people (id, name, nickname, relationship, organization, profile_notes, contact_info, last_contact, followup_reminder, tags)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO people (id, name, nickname, relationship, organization, profile_notes, contact_info, last_contact, followup_reminder, tags, outreach_status, cases)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     id,
     person.name,
@@ -31,7 +31,9 @@ export function createPerson(person: Omit<Person, 'id' | 'created_at' | 'updated
     person.contact_info ? JSON.stringify(person.contact_info) : null,
     person.last_contact || null,
     person.followup_reminder || null,
-    JSON.stringify(person.tags)
+    JSON.stringify(person.tags),
+    person.outreach_status || null,
+    person.cases ? JSON.stringify(person.cases) : null
   )
   
   return { ...person, id, created_at: now, updated_at: now }
@@ -54,6 +56,9 @@ export function updatePerson(id: string, updates: Partial<Person>): Person | nul
   if (updates.last_contact !== undefined) { fields.push('last_contact = ?'); values.push(updates.last_contact) }
   if (updates.followup_reminder !== undefined) { fields.push('followup_reminder = ?'); values.push(updates.followup_reminder) }
   if (updates.tags !== undefined) { fields.push('tags = ?'); values.push(JSON.stringify(updates.tags)) }
+  if (updates.outreach_status !== undefined) { fields.push('outreach_status = ?'); values.push(updates.outreach_status) }
+  if (updates.cases !== undefined) { fields.push('cases = ?'); values.push(JSON.stringify(updates.cases)) }
+  if (updates.email_draft !== undefined) { fields.push('email_draft = ?'); values.push(JSON.stringify(updates.email_draft)) }
   
   fields.push('updated_at = ?')
   values.push(new Date().toISOString())
@@ -104,6 +109,9 @@ function mapPersonRow(row: Record<string, unknown>): Person {
     last_contact: row.last_contact as string | undefined,
     followup_reminder: row.followup_reminder as string | undefined,
     tags: row.tags ? JSON.parse(row.tags as string) : [],
+    outreach_status: row.outreach_status as OutreachStatus | undefined,
+    cases: row.cases ? JSON.parse(row.cases as string) : undefined,
+    email_draft: row.email_draft ? JSON.parse(row.email_draft as string) : undefined,
     created_at: row.created_at as string,
     updated_at: row.updated_at as string,
   }

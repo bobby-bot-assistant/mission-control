@@ -1,14 +1,6 @@
+@import '../styles/theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --muted: #71717a;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-}
+/* Remove old hardcoded colors - now using theme.css */

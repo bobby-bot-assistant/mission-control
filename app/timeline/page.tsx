@@ -159,7 +159,7 @@ export default function TimelinePage() {
     return (
       <div className="p-8">
         <h1 className="text-2xl font-bold mb-2">Timeline</h1>
-        <p className="text-zinc-600 dark:text-zinc-400">Loading...</p>
+        <p className="text-foreground-muted">Loading...</p>
       </div>
     )
   }
@@ -173,12 +173,12 @@ export default function TimelinePage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold mb-2">Timeline</h1>
-          <p className="text-zinc-600 dark:text-zinc-400">Visual overview of deadlines and tasks</p>
+          <p className="text-foreground-muted">Visual overview of deadlines and tasks</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setView(view === 'week' ? 'month' : 'week')}
-            className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-700"
+            className="px-4 py-2 bg-secondary rounded-lg hover:bg-background-subtle"
           >
             {view === 'week' ? 'Month View' : 'Week View'}
           </button>
@@ -195,7 +195,7 @@ export default function TimelinePage() {
       <div className="mb-6 flex items-center justify-between">
         <button
           onClick={() => navigate('prev')}
-          className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg"
+          className="p-2 hover:bg-surface-hover rounded-lg"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -204,7 +204,7 @@ export default function TimelinePage() {
         <h2 className="text-xl font-semibold">{monthYear}</h2>
         <button
           onClick={() => navigate('next')}
-          className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg"
+          className="p-2 hover:bg-surface-hover rounded-lg"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -213,11 +213,11 @@ export default function TimelinePage() {
       </div>
 
       {/* Calendar Grid */}
-      <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-800">
+      <div className="bg-surface rounded-lg border border-border">
         {/* Day headers */}
-        <div className="grid grid-cols-7 gap-0 border-b border-zinc-200 dark:border-zinc-800">
+        <div className="grid grid-cols-7 gap-0 border-b border-border">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="p-3 text-center text-sm font-medium text-zinc-600 dark:text-zinc-400">
+            <div key={day} className="p-3 text-center text-sm font-medium text-foreground-muted">
               {day}
             </div>
           ))}
@@ -235,23 +235,23 @@ export default function TimelinePage() {
               <div
                 key={index}
                 className={`
-                  min-h-[100px] p-2 border-r border-b border-zinc-200 dark:border-zinc-800
-                  ${!isCurrentMonth && view === 'month' ? 'bg-zinc-50 dark:bg-zinc-950' : ''}
-                  ${isWeekend ? 'bg-zinc-50/50 dark:bg-zinc-900/50' : ''}
+                  min-h-[100px] p-2 border-r border-b border-border
+                  ${!isCurrentMonth && view === 'month' ? 'bg-background-subtle' : ''}
+                  ${isWeekend ? 'bg-background-subtle/50/50' : ''}
                   ${isToday ? 'bg-blue-50 dark:bg-blue-900/20' : ''}
-                  hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors
+                  hover:bg-surface-hover/50 transition-colors
                 `}
               >
                 <div className="flex items-start justify-between mb-1">
                   <span className={`text-sm ${
-                    !isCurrentMonth && view === 'month' ? 'text-zinc-400' : 
+                    !isCurrentMonth && view === 'month' ? 'text-foreground-subtle' : 
                     isToday ? 'font-bold text-blue-600 dark:text-blue-400' : 
-                    'text-zinc-600 dark:text-zinc-300'
+                    'text-foreground-muted'
                   }`}>
                     {date.getDate()}
                   </span>
                   {dateEvents.length > 0 && (
-                    <span className="text-xs bg-zinc-200 dark:bg-zinc-700 px-1.5 py-0.5 rounded">
+                    <span className="text-xs bg-background-subtle px-1.5 py-0.5 rounded">
                       {dateEvents.length}
                     </span>
                   )}
@@ -284,7 +284,7 @@ export default function TimelinePage() {
                   ))}
                   {dateEvents.length > 3 && (
                     <button 
-                      className="text-xs text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
+                      className="text-xs text-foreground-subtle hover:text-foreground-muted"
                       onClick={() => {
                         // Could open a modal with all events for this date
                         router.push(`/tasks?date=${date.toISOString().split('T')[0]}`)
@@ -304,15 +304,15 @@ export default function TimelinePage() {
       <div className="mt-6 flex items-center gap-6 text-sm">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-100 dark:bg-green-900/30 rounded"></div>
-          <span className="text-zinc-600 dark:text-zinc-400">Tasks</span>
+          <span className="text-foreground-muted">Tasks</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-purple-100 dark:bg-purple-900/30 rounded"></div>
-          <span className="text-zinc-600 dark:text-zinc-400">Project Deadlines</span>
+          <span className="text-foreground-muted">Project Deadlines</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-blue-100 dark:bg-blue-900/30 rounded"></div>
-          <span className="text-zinc-600 dark:text-zinc-400">Today</span>
+          <span className="text-foreground-muted">Today</span>
         </div>
       </div>
     </div>

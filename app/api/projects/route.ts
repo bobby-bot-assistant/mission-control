@@ -14,6 +14,12 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json()
+    
+    // Validate required fields
+    if (!body.name || body.name.trim() === '') {
+      return NextResponse.json({ error: 'name is required' }, { status: 400 })
+    }
+    
     const project = createProject(body)
     return NextResponse.json(project, { status: 201 })
   } catch (error) {

@@ -6,28 +6,30 @@ import { useState, useEffect } from 'react'
 interface OpportunityDetail {
   id: string
   name: string
-  sds: number
+  sds_score: number
   deadline?: string
   amount?: string
-  description: string
+  description?: string
   result: 'YES' | 'PROBABLY' | 'LATER' | 'NO'
+  related_project_id?: string
+  reasoning?: string
+  tags?: string[]
+  research?: string[]
+  tasks?: string[]
+  documents?: string[]
   projectId?: string
-  reasoning: string
-  research: string[]
-  tasks: string[]
-  documents: string[]
 }
 
 const opportunitiesData: Record<string, OpportunityDetail> = {
   'opp-nih-sbir': {
     id: 'opp-nih-sbir',
     name: 'NIH SBIR Phase I',
-    sds: 32.5,
+    sds_score: 32.5,
     deadline: 'April 5, 2026',
     amount: '$300K',
     description: 'Story Hour with Simon - AI-powered bedtime interventions for preventive mental health',
     result: 'YES',
-    projectId: 'proj_story_hour',
+    related_project_id: 'proj_story_hour',
     reasoning: 'Highest SDS score due to: (1) Revenue potential $300K → $2M, (2) Perfect alignment with preventive mental health mission, (3) High leverage - unlocks Phase II and credibility, (4) Timeline fits Q2 2026 capacity, (5) Low cognitive load with clear SBIR framework',
     research: [
       'NIH reauthorization pending - creates timeline risk',
@@ -50,12 +52,12 @@ const opportunitiesData: Record<string, OpportunityDetail> = {
   'opp-nimh-digital': {
     id: 'opp-nimh-digital',
     name: 'NIMH Digital Mental Health NOFO',
-    sds: 27.5,
+    sds_score: 27.5,
     deadline: 'TBD - Awaiting announcement',
     amount: '$250K',
     description: 'Innovation funding for digital mental health interventions',
     result: 'YES',
-    projectId: 'proj_story_hour',
+    related_project_id: 'proj_story_hour',
     reasoning: 'Strong SDS due to: (1) Direct NIMH alignment, (2) Innovation focus matches our AI approach, (3) Can leverage NIH SBIR work, (4) Builds federal funding track record',
     research: [
       'NOFO expected Q2-Q3 2026',
@@ -72,33 +74,6 @@ const opportunitiesData: Record<string, OpportunityDetail> = {
       'NIH_SBIR_Framework.md',
       'Grant_Pipeline_Analysis.md'
     ]
-  },
-  'opp-grantscout': {
-    id: 'opp-grantscout',
-    name: 'GrantScout Commercialization',
-    sds: 23.0,
-    deadline: 'Ongoing',
-    amount: 'Revenue Stream',
-    description: 'SaaS tool for grant discovery and tracking',
-    result: 'YES',
-    projectId: 'proj_grant_engine',
-    reasoning: 'Revenue diversification opportunity: (1) Existing codebase, (2) Clear market need, (3) Subscription model, (4) Low marginal cost, (5) Supports grant-seeking community',
-    research: [
-      'Grant management software: $500M market',
-      'Competitors: GrantStation, GrantHub, Instrumentl',
-      'Differentiation: AI-powered matching',
-      'Pricing: $99-299/month tier structure'
-    ],
-    tasks: [
-      'MVP feature prioritization',
-      'Landing page design',
-      'Stripe integration',
-      'Beta user recruitment'
-    ],
-    documents: [
-      'GrantScout_Business_Plan.md',
-      'Revenue_Model_Analysis.md'
-    ]
   }
 }
 
@@ -106,15 +81,37 @@ export default function OpportunityDetail() {
   const params = useParams()
   const router = useRouter()
   const [opportunity, setOpportunity] = useState<OpportunityDetail | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (params.id && typeof params.id === 'string') {
-      const opp = opportunitiesData[params.id]
-      if (opp) {
-        setOpportunity(opp)
+    async function fetchOpportunity() {
+      if (params.id && typeof params.id === 'string') {
+        try {
+          const res = await fetch('/api/opportunities?q=' + params.id)
+          if (res.ok) {
+            const data = await res.json()
+            const opp = data.find((o: OpportunityDetail) => o.id === params.id)
+            if (opp) {
+              setOpportunity(opp)
+            }
+          }
+        } catch (error) {
+          console.error('Failed to fetch opportunity:', error)
+        } finally {
+          setLoading(false)
+        }
       }
     }
+    fetchOpportunity()
   }, [params.id])
+
+  if (loading) {
+    return (
+      <div className="p-8">
+        <h1 className="text-2xl font-bold mb-2">Loading...</h1>
+      </div>
+    )
+  }
 
   if (!opportunity) {
     return (
@@ -130,9 +127,9 @@ export default function OpportunityDetail() {
     )
   }
 
-  const sdsColor = opportunity.sds >= 32 ? 'text-red-600 dark:text-red-400' : 
-                  opportunity.sds >= 25 ? 'text-yellow-600 dark:text-yellow-400' : 
-                  'text-zinc-600 dark:text-zinc-400'
+  const sdsColor = opportunity.sds_score >= 32 ? 'text-red-600 dark:text-red-400' : 
+                  opportunity.sds_score >= 25 ? 'text-yellow-600 dark:text-yellow-400' : 
+                  'text-foreground-muted'
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
@@ -149,11 +146,11 @@ export default function OpportunityDetail() {
         <div className="flex items-start justify-between mb-4">
           <div>
             <h1 className="text-3xl font-bold mb-2">{opportunity.name}</h1>
-            <p className="text-lg text-zinc-600 dark:text-zinc-400">{opportunity.description}</p>
+            {opportunity.description && <p className="text-lg text-foreground-muted">{opportunity.description}</p>}
           </div>
           <div className="text-center ml-8">
-            <p className={`text-4xl font-bold ${sdsColor}`}>{opportunity.sds}</p>
-            <p className="text-sm text-zinc-500">SDS Score</p>
+            <p className={`text-4xl font-bold ${sdsColor}`}>{opportunity.sds_score}</p>
+            <p className="text-sm text-foreground-muted">SDS Score</p>
           </div>
         </div>
         
@@ -167,7 +164,7 @@ export default function OpportunityDetail() {
             </span>
           )}
           {opportunity.deadline && (
-            <span className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded">
+            <span className="px-3 py-1 bg-secondary text-foreground-muted rounded">
               {opportunity.deadline}
             </span>
           )}
@@ -175,56 +172,31 @@ export default function OpportunityDetail() {
       </div>
 
       {/* Reasoning */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">🧠 Strategic Reasoning</h2>
-        <div className="bg-zinc-50 dark:bg-zinc-900 rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
-          <p className="text-zinc-700 dark:text-zinc-300">{opportunity.reasoning}</p>
-        </div>
-      </section>
+      {opportunity.reasoning && (
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-3">🧠 Strategic Reasoning</h2>
+          <div className="bg-background-subtle rounded-lg p-4 border border-border">
+            <p className="text-foreground-muted">{opportunity.reasoning}</p>
+          </div>
+        </section>
+      )}
 
-      {/* Research */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">🔍 Key Research</h2>
-        <ul className="space-y-2">
-          {opportunity.research.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-3">
-              <span className="text-green-600 dark:text-green-400 mt-1">•</span>
-              <span className="text-zinc-700 dark:text-zinc-300">{item}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Tasks */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">✅ Required Tasks</h2>
-        <div className="space-y-2">
-          {opportunity.tasks.map((task, idx) => (
-            <div 
-              key={idx}
-              className="p-3 bg-white dark:bg-zinc-900 rounded border border-zinc-200 dark:border-zinc-800"
-            >
-              <p className="text-zinc-700 dark:text-zinc-300">{task}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Related Documents */}
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-3">📄 Related Documents</h2>
-        <div className="space-y-2">
-          {opportunity.documents.map((doc, idx) => (
-            <button
-              key={idx}
-              onClick={() => router.push(`/docs?search=${doc}`)}
-              className="p-3 bg-white dark:bg-zinc-900 rounded border border-zinc-200 dark:border-zinc-800 w-full text-left hover:shadow-md transition-shadow"
-            >
-              <p className="text-blue-600 dark:text-blue-400 font-medium">{doc}</p>
-            </button>
-          ))}
-        </div>
-      </section>
+      {/* Tags */}
+      {opportunity.tags && opportunity.tags.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-3">🏷️ Tags</h2>
+          <div className="flex flex-wrap gap-2">
+            {opportunity.tags.map((tag, idx) => (
+              <span 
+                key={idx}
+                className="px-3 py-1 bg-secondary rounded-full text-sm"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Actions */}
       <div className="flex gap-4">
@@ -236,7 +208,7 @@ export default function OpportunityDetail() {
         </button>
         <button
           onClick={() => router.push('/tasks')}
-          className="px-6 py-2 border border-zinc-300 dark:border-zinc-600 rounded hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          className="px-6 py-2 border border-border rounded hover:bg-surface-hover transition-colors"
         >
           View All Tasks
         </button>

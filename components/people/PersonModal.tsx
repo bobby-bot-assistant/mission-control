@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Person, Relationship, ContactInfo } from '@/lib/types'
+import { Person, Relationship, ContactInfo, OutreachStatus } from '@/lib/types'
 
 interface PersonModalProps {
   isOpen: boolean
@@ -18,6 +18,14 @@ const RELATIONSHIP_OPTIONS: Relationship[] = [
   '💰 Client / Customer',
   '🌐 Community Member',
   '📧 One-time Contact',
+]
+
+const OUTREACH_STATUS_OPTIONS: OutreachStatus[] = [
+  '⬜ Not Contacted',
+  '📧 Emailed',
+  '💬 Responded',
+  '📅 Meeting Scheduled',
+  '✅ Engaged',
 ]
 
 export default function PersonModal({ isOpen, onClose, onSave, editPerson }: PersonModalProps) {
@@ -37,6 +45,8 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
     last_contact: '',
     followup_reminder: '',
     tags: '',
+    outreach_status: '' as OutreachStatus | '',
+    cases: '',
   })
   const [saving, setSaving] = useState(false)
 
@@ -58,6 +68,8 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
         last_contact: editPerson.last_contact || '',
         followup_reminder: editPerson.followup_reminder || '',
         tags: editPerson.tags.join(', '),
+        outreach_status: editPerson.outreach_status || '',
+        cases: editPerson.cases?.join(', ') || '',
       })
     } else {
       setFormData({
@@ -76,6 +88,8 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
         last_contact: '',
         followup_reminder: '',
         tags: '',
+        outreach_status: '',
+        cases: '',
       })
     }
   }, [editPerson, isOpen])
@@ -104,7 +118,9 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
         last_contact: formData.last_contact || undefined,
         followup_reminder: formData.followup_reminder || undefined,
         tags: formData.tags.split(',').map(t => t.trim()).filter(Boolean),
-      })
+        outreach_status: formData.outreach_status || undefined,
+        cases: formData.cases ? formData.cases.split(',').map(c => c.trim()).filter(Boolean) : undefined,
+      } as Partial<Person>)
       onClose()
     } catch (error) {
       console.error('Failed to save person:', error)
@@ -115,14 +131,14 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-zinc-900 rounded-lg border border-zinc-800 w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
+      <div className="bg-background-subtle rounded-lg border border-border w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">
             {editPerson ? 'Edit Person' : 'Add New Person'}
           </h2>
           <button
             onClick={onClose}
-            className="text-zinc-500 hover:text-zinc-300"
+            className="text-foreground-subtle hover:text-foreground-muted"
           >
             ✕
           </button>
@@ -138,7 +154,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 required
                 value={formData.name}
                 onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Full name"
               />
             </div>
@@ -149,7 +165,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 type="text"
                 value={formData.nickname}
                 onChange={e => setFormData({ ...formData, nickname: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="What you call them"
               />
             </div>
@@ -161,7 +177,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
               <select
                 value={formData.relationship}
                 onChange={e => setFormData({ ...formData, relationship: e.target.value as Relationship })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               >
                 {RELATIONSHIP_OPTIONS.map(rel => (
                   <option key={rel} value={rel}>{rel}</option>
@@ -175,7 +191,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 type="text"
                 value={formData.organization}
                 onChange={e => setFormData({ ...formData, organization: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Company, group, etc."
               />
             </div>
@@ -188,7 +204,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
               rows={3}
               value={formData.profile_notes}
               onChange={e => setFormData({ ...formData, profile_notes: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               placeholder="Background, interests, how you know them..."
             />
           </div>
@@ -204,7 +220,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                   ...formData, 
                   contact_info: { ...formData.contact_info, email: e.target.value }
                 })}
-                className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Email"
               />
               <input
@@ -214,7 +230,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                   ...formData, 
                   contact_info: { ...formData.contact_info, phone: e.target.value }
                 })}
-                className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Phone"
               />
               <input
@@ -224,7 +240,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                   ...formData, 
                   contact_info: { ...formData.contact_info, linkedin: e.target.value }
                 })}
-                className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="LinkedIn"
               />
               <input
@@ -234,7 +250,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                   ...formData, 
                   contact_info: { ...formData.contact_info, twitter: e.target.value }
                 })}
-                className="bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Twitter/X"
               />
             </div>
@@ -245,7 +261,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 ...formData, 
                 contact_info: { ...formData.contact_info, other: e.target.value }
               })}
-              className="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full mt-2 bg-surface-hover border border-border-subtle rounded px-3 py-2"
               placeholder="Other contact info"
             />
           </div>
@@ -258,7 +274,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 type="date"
                 value={formData.last_contact}
                 onChange={e => setFormData({ ...formData, last_contact: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               />
             </div>
 
@@ -268,7 +284,34 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
                 type="date"
                 value={formData.followup_reminder}
                 onChange={e => setFormData({ ...formData, followup_reminder: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
+              />
+            </div>
+          </div>
+
+          {/* Outreach Status & Cases */}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Outreach Status</label>
+              <select
+                value={formData.outreach_status}
+                onChange={e => setFormData({ ...formData, outreach_status: e.target.value as OutreachStatus | '' })}
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
+              >
+                <option value="">None</option>
+                {OUTREACH_STATUS_OPTIONS.map(s => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Cases (comma separated)</label>
+              <input
+                type="text"
+                value={formData.cases}
+                onChange={e => setFormData({ ...formData, cases: e.target.value })}
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
+                placeholder="Federal MDL 3047, CA State JCCP"
               />
             </div>
           </div>
@@ -280,7 +323,7 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
               type="text"
               value={formData.tags}
               onChange={e => setFormData({ ...formData, tags: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               placeholder="colleague, mentor, investor"
             />
           </div>
@@ -289,14 +332,14 @@ export default function PersonModal({ isOpen, onClose, onSave, editPerson }: Per
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+              className="px-4 py-2 text-foreground-subtle hover:text-foreground"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200 disabled:opacity-50"
+              className="bg-secondary text-foreground px-4 py-2 rounded-lg font-medium hover:bg-background-subtle disabled:opacity-50"
             >
               {saving ? 'Saving...' : editPerson ? 'Save Changes' : 'Add Person'}
             </button>

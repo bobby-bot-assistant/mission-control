@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token Test</title>
+</head>
+<body>
+    <h1>Token Usage Test</h1>
+    <div id="result">Loading...</div>
+    <script>
+        fetch('/.token-usage.json?' + Date.now())
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `
+                    <p>Current: ${data.current}</p>
+                    <p>Max: ${data.max}</p>
+                    <p>Percentage: ${data.percentage}%</p>
+                    <p>Updated: ${data.timestamp}</p>
+                `;
+            })
+            .catch(err => {
+                document.getElementById('result').innerHTML = 'Error: ' + err;
+            });
+    </script>
+</body>
+</html>

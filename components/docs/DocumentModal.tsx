@@ -92,14 +92,14 @@ export default function DocumentModal({ isOpen, onClose, onSave, editDocument, p
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-zinc-900 rounded-lg border border-zinc-800 w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
+      <div className="bg-background-subtle rounded-lg border border-border w-full max-w-2xl p-6 max-h-screen overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">
             {editDocument ? 'Edit Document' : 'Create New Document'}
           </h2>
           <button
             onClick={onClose}
-            className="text-zinc-500 hover:text-zinc-300"
+            className="text-foreground-subtle hover:text-foreground-muted"
           >
             ✕
           </button>
@@ -115,7 +115,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editDocument, p
                 required
                 value={formData.title}
                 onChange={e => setFormData({ ...formData, title: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Document title"
               />
             </div>
@@ -125,7 +125,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editDocument, p
               <select
                 value={formData.type}
                 onChange={e => setFormData({ ...formData, type: e.target.value as DocumentType })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               >
                 {DOCUMENT_TYPES.map(type => (
                   <option key={type} value={type}>{type}</option>
@@ -141,7 +141,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editDocument, p
               rows={10}
               value={formData.content}
               onChange={e => setFormData({ ...formData, content: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2 font-mono text-sm"
+              className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2 font-mono text-sm"
               placeholder="# Heading
 
 Write your document content here...
@@ -151,7 +151,7 @@ Write your document content here...
 
 **Bold text** and *italic text*"
             />
-            <p className="text-xs text-zinc-500 mt-1">
+            <p className="text-xs text-foreground-subtle mt-1">
               {formData.content.split(/\s+/).filter(w => w.length > 0).length} words
             </p>
           </div>
@@ -163,7 +163,7 @@ Write your document content here...
               type="text"
               value={formData.summary}
               onChange={e => setFormData({ ...formData, summary: e.target.value })}
-              className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+              className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               placeholder="Brief summary (shown in document cards)"
             />
           </div>
@@ -175,7 +175,7 @@ Write your document content here...
               <select
                 value={formData.related_project_id}
                 onChange={e => setFormData({ ...formData, related_project_id: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
               >
                 <option value="">No Project</option>
                 {projects.map(project => (
@@ -190,7 +190,7 @@ Write your document content here...
                 type="text"
                 value={formData.source_context}
                 onChange={e => setFormData({ ...formData, source_context: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="Where did this come from?"
               />
             </div>
@@ -204,7 +204,7 @@ Write your document content here...
                 type="text"
                 value={formData.file_format}
                 onChange={e => setFormData({ ...formData, file_format: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="md, txt, pdf, etc."
               />
             </div>
@@ -215,7 +215,7 @@ Write your document content here...
                 type="text"
                 value={formData.tags}
                 onChange={e => setFormData({ ...formData, tags: e.target.value })}
-                className="w-full bg-zinc-800 border border-zinc-700 rounded px-3 py-2"
+                className="w-full bg-surface-hover border border-border-subtle rounded px-3 py-2"
                 placeholder="tag1, tag2, tag3"
               />
             </div>
@@ -225,14 +225,14 @@ Write your document content here...
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-zinc-400 hover:text-zinc-200"
+              className="px-4 py-2 text-foreground-subtle hover:text-foreground"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="bg-zinc-100 text-zinc-900 px-4 py-2 rounded-lg font-medium hover:bg-zinc-200 disabled:opacity-50"
+              className="bg-secondary text-foreground px-4 py-2 rounded-lg font-medium hover:bg-background-subtle disabled:opacity-50"
             >
               {saving ? 'Saving...' : editDocument ? 'Save Changes' : 'Create Document'}
             </button>

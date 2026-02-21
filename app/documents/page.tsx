@@ -14,6 +14,8 @@ interface DocumentFile {
   modified_at: string
 }
 
+type FilterType = 'review' | 'briefings' | 'daily' | 'all'
+
 const EXTENSIONS = ['.md', '.txt', '.pdf', '.jpg', '.png', '.json']
 const TEXT_EXTENSIONS = new Set(['.md', '.txt', '.json'])
 const ROOT_PATH = '/Users/daisydukes/openclaw-projects'
@@ -22,11 +24,12 @@ export default function DocumentsPage() {
   const [documents, setDocuments] = useState<DocumentFile[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
-  const [selectedExtensions, setSelectedExtensions] = useState<string[]>(EXTENSIONS)
+  const [selectedExtensions, setSelectedExtensions] = useState<string[]>(EXTENSIONS.filter(e => e !== '.json'))
   const [sortNewest, setSortNewest] = useState(true)
   const [selectedDoc, setSelectedDoc] = useState<DocumentFile | null>(null)
   const [contentMap, setContentMap] = useState<Record<string, string>>({})
   const [loadingContent, setLoadingContent] = useState(false)
+  const [currentFilter, setCurrentFilter] = useState<FilterType>('review')
 
   useEffect(() => {
     fetchDocuments()
@@ -73,13 +76,50 @@ export default function DocumentsPage() {
 
   const filteredDocuments = useMemo(() => {
     const query = search.trim().toLowerCase()
+    
+    // Helper: check if file matches current filter criteria
+    function matchesFilter(doc: DocumentFile): boolean {
+      const content = contentMap[doc.path] || ''
+      
+      switch (currentFilter) {
+        case 'review':
+          // Drafts & Review: #review tag OR 'draft' in filename, exclude .json
+          if (doc.extension === '.json') return false
+          const hasReviewTag = content.includes('#review')
+          const hasDraftInName = doc.name.toLowerCase().includes('draft')
+          return hasReviewTag || hasDraftInName
+        
+        case 'briefings':
+          // briefings/ or scout/ paths, OR filename contains "brief", exclude .json
+          if (doc.extension === '.json') return false
+          const inBriefingsPath = doc.path.includes('/briefings/') || doc.path.includes('/scout/')
+          const hasBriefInName = doc.name.toLowerCase().includes('brief')
+          return inBriefingsPath || hasBriefInName
+        
+        case 'daily':
+          // memory/ path OR filename matches YYYY-MM-DD pattern
+          const inMemoryPath = doc.path.includes('/memory/')
+          const matchesDatePattern = /\d{4}-\d{2}-\d{2}/.test(doc.name)
+          return inMemoryPath || matchesDatePattern
+        
+        case 'all':
+        default:
+          // Show everything, respect extension toggles
+          return true
+      }
+    }
+
     const filtered = documents.filter(doc => {
+      // First apply extension filter
       if (!selectedExtensions.includes(doc.extension)) return false
+      // Then apply smart filter
+      if (!matchesFilter(doc)) return false
+      // Then apply search query
       if (!query) return true
+      const docContent = contentMap[doc.path] || ''
       const inName = doc.name.toLowerCase().includes(query)
       const inPath = doc.path.toLowerCase().includes(query)
-      const content = contentMap[doc.path] || ''
-      const inContent = content.toLowerCase().includes(query)
+      const inContent = docContent.toLowerCase().includes(query)
       return inName || inPath || inContent
     })
 
@@ -88,7 +128,7 @@ export default function DocumentsPage() {
       const bTime = new Date(b.modified_at).getTime()
       return sortNewest ? bTime - aTime : aTime - bTime
     })
-  }, [documents, search, selectedExtensions, sortNewest, contentMap])
+  }, [documents, search, selectedExtensions, sortNewest, contentMap, currentFilter])
 
   const reviewDocuments = useMemo(() => {
     const now = Date.now()
@@ -155,6 +195,36 @@ export default function DocumentsPage() {
             placeholder="Search name or content..."
             className="w-full rounded border border-border bg-surface-hover px-3 py-2 text-sm"
           />
+        </div>
+
+        {/* Quick Filters */}
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground-muted mb-3">Quick Filters</h2>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { key: 'review', label: '📝 Drafts & Review', filter: 'review' as FilterType },
+              { key: 'briefings', label: '📋 Briefings', filter: 'briefings' as FilterType },
+              { key: 'daily', label: '📅 Daily Records', filter: 'daily' as FilterType },
+              { key: 'all', label: '📁 All Files', filter: 'all' as FilterType },
+            ].map(({ key, label, filter }) => (
+              <button
+                key={key}
+                onClick={() => setCurrentFilter(filter)}
+                className={`px-3 py-2 rounded text-sm border ${
+                  currentFilter === filter
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-surface border-border text-foreground hover:bg-surface-hover'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Extensions */}
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-foreground-muted mb-2">Extensions</h2>
           <div className="flex flex-wrap gap-2">
             {EXTENSIONS.map(ext => (
               <button
@@ -285,21 +355,23 @@ export default function DocumentsPage() {
                 {loadingContent ? (
                   <p className="text-foreground-muted">Loading content...</p>
                 ) : selectedDoc.extension === '.md' ? (
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeHighlight]}
-                    className="prose prose-invert max-w-none"
-                  >
-                    {selectedContent || 'No content.'}
-                  </ReactMarkdown>
+                  <div className="prose dark:prose-invert max-w-none text-foreground">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                    >
+                      {selectedContent || 'No content.'}
+                    </ReactMarkdown>
+                  </div>
                 ) : (
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    rehypePlugins={[rehypeHighlight]}
-                    className="prose prose-invert max-w-none"
-                  >
-                    {`\`\`\`${selectedDoc.extension.replace('.', '') || 'text'}\n${selectedContent || ''}\n\`\`\``}
-                  </ReactMarkdown>
+                  <div className="prose dark:prose-invert max-w-none text-foreground">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                    >
+                      {`\`\`\`${selectedDoc.extension.replace('.', '') || 'text'}\n${selectedContent || ''}\n\`\`\``}
+                    </ReactMarkdown>
+                  </div>
                 )}
               </div>
             )}

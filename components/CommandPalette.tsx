@@ -238,11 +238,11 @@ export default function CommandPalette() {
       <div className="fixed inset-0 bg-black/50" onClick={() => setIsOpen(false)} />
       
       <div className="relative min-h-screen flex items-start justify-center pt-[20vh]">
-        <div className="relative bg-white dark:bg-zinc-900 rounded-lg shadow-2xl w-full max-w-2xl mx-4">
+        <div className="relative bg-surface rounded-lg shadow-2xl w-full max-w-2xl mx-4">
           {/* Search Input */}
-          <div className="flex items-center border-b border-zinc-200 dark:border-zinc-800">
+          <div className="flex items-center border-b border-border">
             <div className="pl-4 pr-2 py-4">
-              <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-foreground-subtle" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -254,7 +254,7 @@ export default function CommandPalette() {
               className="flex-1 px-2 py-4 bg-transparent outline-none text-lg"
               autoFocus
             />
-            <div className="px-4 py-4 text-sm text-zinc-400">
+            <div className="px-4 py-4 text-sm text-foreground-subtle">
               ESC to close
             </div>
           </div>
@@ -262,7 +262,7 @@ export default function CommandPalette() {
           {/* Results */}
           <div className="max-h-[60vh] overflow-auto">
             {results.length === 0 ? (
-              <div className="p-8 text-center text-zinc-500">
+              <div className="p-8 text-center text-foreground-subtle">
                 {query ? 'No results found' : 'Start typing to search...'}
               </div>
             ) : (
@@ -277,18 +277,18 @@ export default function CommandPalette() {
                     onMouseEnter={() => setSelectedIndex(index)}
                     className={`w-full px-4 py-3 flex items-center gap-3 text-left transition-colors ${
                       index === selectedIndex 
-                        ? 'bg-zinc-100 dark:bg-zinc-800' 
-                        : 'hover:bg-zinc-50 dark:hover:bg-zinc-800/50'
+                        ? 'bg-secondary' 
+                        : 'hover:bg-surface-hover/50'
                     }`}
                   >
                     <span className="text-xl flex-shrink-0">{result.icon}</span>
                     <div className="flex-1 min-w-0">
                       <div className="font-medium">{result.title}</div>
                       {result.subtitle && (
-                        <div className="text-sm text-zinc-500 dark:text-zinc-400">{result.subtitle}</div>
+                        <div className="text-sm text-foreground-subtle">{result.subtitle}</div>
                       )}
                     </div>
-                    <div className="flex-shrink-0 text-xs text-zinc-400">
+                    <div className="flex-shrink-0 text-xs text-foreground-subtle">
                       {index === selectedIndex && '↵'}
                     </div>
                   </button>
@@ -298,7 +298,7 @@ export default function CommandPalette() {
           </div>
 
           {/* Footer */}
-          <div className="border-t border-zinc-200 dark:border-zinc-800 px-4 py-3 flex items-center justify-between text-xs text-zinc-500">
+          <div className="border-t border-border px-4 py-3 flex items-center justify-between text-xs text-foreground-subtle">
             <div className="flex items-center gap-4">
               <span>↑↓ Navigate</span>
               <span>↵ Select</span>
