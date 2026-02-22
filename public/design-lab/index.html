@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Lab - Mindful Media</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0f0f0f;
+            color: #e5e5e5;
+            line-height: 1.6;
+            padding: 40px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .entry {
+            background: #1a1a1a;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 1px solid #2a2a2a;
+        }
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .entry h2 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        .status {
+            background: #10b981;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .date {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 20px;
+        }
+        .screenshot-container {
+            background: #000;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .screenshot-container img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .before, .after {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #2a2a2a;
+        }
+        .before h3, .after h3 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+            color: #9ca3af;
+        }
+        .before {
+            border-color: #ef4444;
+        }
+        .after {
+            border-color: #10b981;
+        }
+        .notes {
+            background: #262626;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #d1d5db;
+        }
+        .notes strong {
+            color: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Design Lab</h1>
+    
+    <div class="entry">
+        <div class="entry-header">
+            <h2>Pulse Scorecard — Ethical AI Trust Statement</h2>
+            <span class="status">✅ Verified</span>
+        </div>
+        <p class="date">Date: 2026-02-21</p>
+        
+        <div class="screenshot-container">
+            <img src="pulse-scorecard-trust-statement-fix.png" alt="Pulse Scorecard Trust Statement Fix">
+        </div>
+        
+        <div class="before-after">
+            <div class="before">
+                <h3>❌ Before</h3>
+                <p>No trust statement was present above the Calendly CTA. The "Want to go deeper?" text appeared immediately below the "Ready to Go Deeper?" heading without any ethical AI reassurance for users.</p>
+            </div>
+            <div class="after">
+                <h3>✅ After</h3>
+                <p>An italicized trust statement now appears above the "Want to go deeper?" text: <em>"All insights are generated using ethical AI frameworks — no data is shared with third parties, and your assessment remains fully confidential."</em> This is styled in gray-500 text color.</p>
+            </div>
+        </div>
+        
+        <div class="notes">
+            <strong>Notes:</strong> Trust statement added above Calendly CTA per spec. The statement is italicized and uses gray-500 text color (#6b7280) to provide ethical AI reassurance to users before they book a strategy session.
+        </div>
+    </div>
+
+</body>
+</html>
