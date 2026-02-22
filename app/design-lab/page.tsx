@@ -154,7 +154,20 @@ function DesignReviewCard({
   onUpdate: (id: string, fields: Partial<DesignReview>) => void
 }) {
   const [feedback, setFeedback] = useState(review.feedback || '')
+  const [actionMessage, setActionMessage] = useState<string | null>(null)
   const config = statusConfig[review.status] || statusConfig.pending
+
+  const handleApprove = () => {
+    onUpdate(review.id, { status: 'approved', feedback })
+    setActionMessage('✅ Approved — notification sent to team')
+    setTimeout(() => setActionMessage(null), 3000)
+  }
+
+  const handleRequestChanges = () => {
+    onUpdate(review.id, { status: 'changes-requested', feedback })
+    setActionMessage('📝 Changes requested — team notified')
+    setTimeout(() => setActionMessage(null), 3000)
+  }
 
   return (
     <div className="bg-surface border border-border rounded-xl overflow-hidden">
@@ -185,16 +198,23 @@ function DesignReviewCard({
             <p className="text-xs text-foreground-muted mb-2 font-medium uppercase tracking-wide">Before</p>
             <div className="rounded-lg border border-border overflow-hidden bg-background-subtle aspect-video flex items-center justify-center">
               {review.beforeScreenshot ? (
-                <img
-                  src={review.beforeScreenshot}
-                  alt={`${review.page} before`}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.style.display = 'none'
-                    if (target.parentElement) target.parentElement.innerHTML = '<span style="color:#71717a" class="text-sm">No screenshot available</span>'
-                  }}
-                />
+                <a 
+                  href={review.beforeScreenshot} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full h-full block"
+                >
+                  <img
+                    src={review.beforeScreenshot}
+                    alt={`${review.page} before`}
+                    className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                      if (target.parentElement) target.parentElement.innerHTML = '<span style="color:#71717a" class="text-sm">No screenshot available</span>'
+                    }}
+                  />
+                </a>
               ) : (
                 <span className="text-sm text-gray-500 dark:text-gray-400">No screenshot yet</span>
               )}
@@ -204,16 +224,23 @@ function DesignReviewCard({
             <p className="text-xs text-foreground-muted mb-2 font-medium uppercase tracking-wide">After</p>
             <div className="rounded-lg border border-border overflow-hidden bg-background-subtle aspect-video flex items-center justify-center">
               {review.afterScreenshot ? (
-                <img
-                  src={review.afterScreenshot}
-                  alt={`${review.page} after`}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.style.display = 'none'
-                    if (target.parentElement) target.parentElement.innerHTML = '<span style="color:#71717a" class="text-sm">No screenshot available</span>'
-                  }}
-                />
+                <a 
+                  href={review.afterScreenshot} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full h-full block"
+                >
+                  <img
+                    src={review.afterScreenshot}
+                    alt={`${review.page} after`}
+                    className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                      if (target.parentElement) target.parentElement.innerHTML = '<span style="color:#71717a" class="text-sm">No screenshot available</span>'
+                    }}
+                  />
+                </a>
               ) : (
                 <span className="text-sm text-gray-500 dark:text-gray-400">No screenshot yet</span>
               )}
@@ -235,6 +262,12 @@ function DesignReviewCard({
 
       {/* Feedback & Actions */}
       <div className="p-5">
+        {/* Action Feedback Message */}
+        {actionMessage && (
+          <div className="mb-4 p-3 rounded-lg bg-blue-50 border border-blue-200 dark:bg-blue-500/10 dark:border-blue-500/20">
+            <p className="text-sm text-blue-700 dark:text-blue-400">{actionMessage}</p>
+          </div>
+        )}
         <div className="mb-4">
           <label className="text-xs text-foreground-muted font-medium uppercase tracking-wide block mb-2">
             Feedback
@@ -250,14 +283,54 @@ function DesignReviewCard({
         <div className="flex gap-2">
           <button
             disabled={updating}
-            onClick={() => onUpdate(review.id, { status: 'approved', feedback })}
+            onClick={async () => {
+              await onUpdate(review.id, { status: 'approved', feedback })
+              setActionMessage('✅ Approved — Harper and Billy notified')
+              setTimeout(() => setActionMessage(null), 5000)
+              // Notify River
+              try {
+                await fetch('/api/agents/river/notify', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    action: 'design-lab-approve',
+                    reviewId: review.id,
+                    timestamp: new Date().toISOString(),
+                    details: { page: review.page, feedback },
+                    notifyAgents: ['harper', 'billy']
+                  })
+                })
+              } catch (e) {
+                console.error('River notification failed:', e)
+              }
+            }}
             className="px-4 py-2 rounded-lg text-sm font-medium bg-green-600 hover:bg-green-700 text-white transition-colors disabled:opacity-50"
           >
             Approve
           </button>
           <button
             disabled={updating}
-            onClick={() => onUpdate(review.id, { status: 'changes-requested', feedback })}
+            onClick={async () => {
+              await onUpdate(review.id, { status: 'changes-requested', feedback })
+              setActionMessage('📝 Changes requested — Daisy and Harper notified')
+              setTimeout(() => setActionMessage(null), 5000)
+              // Notify River
+              try {
+                await fetch('/api/agents/river/notify', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    action: 'design-lab-changes-requested',
+                    reviewId: review.id,
+                    timestamp: new Date().toISOString(),
+                    details: { page: review.page, feedback },
+                    notifyAgents: ['daisy', 'harper']
+                  })
+                })
+              } catch (e) {
+                console.error('River notification failed:', e)
+              }
+            }}
             className="px-4 py-2 rounded-lg text-sm font-medium bg-red-600 hover:bg-red-700 text-white transition-colors disabled:opacity-50"
           >
             Request Changes
